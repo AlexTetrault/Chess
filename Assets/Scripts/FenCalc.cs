@@ -19,6 +19,10 @@ public class FenCalc : MonoBehaviour
     public int halfMoveNumber = 0;
     public string enPassantCode = " - ";
 
+    public GameObject squareToMoveTo;
+    public GameObject squareMovingFrom;
+    public GameObject movingPiece;
+
     public StockfishInterface stockFish;
 
     // Start is called before the first frame update
@@ -113,6 +117,31 @@ public class FenCalc : MonoBehaviour
             {
                 Debug.Log("CHECKMATE: WHITE WINS");
             }
+        }
+        else
+        {
+            string currentSquare = (bestMove[0].ToString() + bestMove[1].ToString());
+            string destinationSquare = (bestMove[2].ToString() + bestMove[3].ToString());
+
+            squareToMoveTo = GameObject.Find(destinationSquare);
+            squareMovingFrom = GameObject.Find(currentSquare);
+
+            RaycastHit hit;
+            squareMovingFrom.GetComponent<Collider>().enabled = false;
+
+            if (Physics.Raycast(squareMovingFrom.transform.position, Vector3.back, out hit))
+            {
+                movingPiece = hit.collider.gameObject;
+
+                if (!manager.isWhitesMove)
+                {
+                    Debug.Log("AI will move piece now");
+                    movingPiece.GetComponent<DragDrop>().AIMoveInit();
+                    movingPiece.GetComponent<DragDrop>().AIMove(new Vector3(squareToMoveTo.transform.position.x, squareToMoveTo.transform.position.y, movingPiece.transform.position.z));
+                }
+            }
+
+            squareMovingFrom.GetComponent<Collider>().enabled = true;
         }
     }
 

@@ -48,6 +48,76 @@ public class DragDrop : MonoBehaviour
 
     }
 
+    public void AIMoveInit()
+    {
+        piece.LineOfSight();
+        startPos = transform.localPosition;
+        realStartPos = transform.position;
+    }
+
+    public void AIMove(Vector3 move)
+    {
+        transform.position = move;
+        SnapToClosestSquare();
+        CheckIfMoveIsValid();
+        CheckIfCastling();
+        CheckForEnPassant();
+        EnpassantTake();
+        CheckForPawnPromotion();
+
+        gameManager.possibleMoves.Clear();
+        gameManager.possibleAttacks.Clear();
+
+        if (piece.isWhite)
+        {
+            for (int i = 0; i < gameManager.blackPieces.Count; i++)
+            {
+                if (piece.transform.localPosition == gameManager.blackPieces[i].transform.localPosition)
+                {
+                    gameManager.blackPieces[i].GetComponent<SpriteRenderer>().enabled = false;
+                    gameManager.blackPieces[i].GetComponent<DragDrop>().enabled = false;
+                    gameManager.blackPieces[i].GetComponent<Collider>().enabled = false;
+                    gameManager.blackPieces.RemoveAt(i);
+                    gameManager.ChangeTurn();
+                    fenCalc.halfMoveNumber = 0;
+                    fenCalc.UpdateFenCode();
+                    return;
+                }
+            }
+        }
+        else
+        {
+            for (int i = 0; i < gameManager.whitePieces.Count; i++)
+            {
+                if (piece.transform.localPosition == gameManager.whitePieces[i].transform.localPosition)
+                {
+                    gameManager.whitePieces[i].GetComponent<SpriteRenderer>().enabled = false;
+                    gameManager.whitePieces[i].GetComponent<DragDrop>().enabled = false;
+                    gameManager.whitePieces[i].GetComponent<Collider>().enabled = false;
+                    gameManager.whitePieces.RemoveAt(i);
+                    gameManager.ChangeTurn();
+                    fenCalc.halfMoveNumber = 0;
+                    fenCalc.UpdateFenCode();
+                    return;
+                }
+            }
+        }
+
+        if (validMove)
+        {
+            gameManager.ChangeTurn();
+            if (piece.tag == "Pawn")
+            {
+                fenCalc.halfMoveNumber = 0;
+            }
+            else
+            {
+                fenCalc.halfMoveNumber++;
+            }
+            fenCalc.UpdateFenCode();
+        }
+    }
+
     private void OnMouseDrag()
     {
         if (piece.isWhite != gameManager.isWhitesMove)
