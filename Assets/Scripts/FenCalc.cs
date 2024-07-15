@@ -1,6 +1,7 @@
 using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
+//using System.Diagnostics;
 using Unity.Burst.CompilerServices;
 using UnityEngine;
 
@@ -98,8 +99,21 @@ public class FenCalc : MonoBehaviour
 
     public async void GetBestMove(string fen)
     {
-        string bestMove = await stockFish.GetBestMove(fen);
+        string bestMove = await stockFish.GetBestMove(fen, 5);
         Debug.Log(bestMove);
+
+        //check for checkmate
+        if (bestMove == "(none)")
+        {
+            if (manager.isWhitesMove)
+            {
+                Debug.Log("CHECKMATE: BLACK WINS");
+            }
+            else
+            {
+                Debug.Log("CHECKMATE: WHITE WINS");
+            }
+        }
     }
 
     string CalculateCastles()
