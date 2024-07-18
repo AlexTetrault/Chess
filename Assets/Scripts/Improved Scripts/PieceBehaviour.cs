@@ -5,28 +5,22 @@ using UnityEngine;
 public class PieceBehaviour : MonoBehaviour
 {
     public GameManager gameManager;
-    public Collider pieceCollider;
-    int layerMask;
-
-    public GameObject activePiece;
-    public ChessPiece chessPiece;
-
-    public List<GameObject> enPassantPawns;
-    public GameObject enPassantVictim;
-
-    public GameObject enPassantSquare;
-
     public Canvas pawnPromotionCanvas;
     public PawnPromotion pawnPromotion;
 
-    private void Start()
-    {
-        layerMask = LayerMask.GetMask("Piece");
-    }
+    [HideInInspector] public GameObject activePiece;
+    [HideInInspector] public ChessPiece chessPiece;
+    [HideInInspector] public List<GameObject> enPassantPawns;
+    [HideInInspector] public GameObject enPassantVictim;
+    [HideInInspector] public GameObject enPassantSquare;
+    [HideInInspector] public Collider pieceCollider;
 
+    //function which calculates a piece's possible moves based on the type of chesspiece.
     public void LineOfSight()
     {
         chessPiece = activePiece.GetComponent<ChessPiece>();
+        pieceCollider = activePiece.GetComponent<Collider>();
+        gameManager.possibleMoves.Clear();
 
         if (activePiece.tag == "Pawn")
         {
@@ -52,6 +46,20 @@ public class PieceBehaviour : MonoBehaviour
         {
             Knight();
         }
+    }
+
+    //determines if the piece's new position is a valid move. 
+    public bool ValidMove(Vector2 initialPos, Vector2 finalPos)
+    {
+        for (int i = 0; i < gameManager.possibleMoves.Count; i++)
+        {
+            if (finalPos - initialPos == gameManager.possibleMoves[i])
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     void Pawn()
@@ -105,8 +113,7 @@ public class PieceBehaviour : MonoBehaviour
 
             if (leftAttack.collider.gameObject.GetComponent<ChessPiece>().isWhite != chessPiece.isWhite)
             {
-                gameManager.possibleAttacks.Add(leftAttack.collider.gameObject);
-
+                Debug.Log("Can attack left");
                 Vector2 move = new Vector2(-1, chessPiece.isWhite ? 1 : -1);
                 gameManager.possibleMoves.Add(move);
             }
@@ -122,8 +129,7 @@ public class PieceBehaviour : MonoBehaviour
 
             if (rightAttack.collider.gameObject.GetComponent<ChessPiece>().isWhite != chessPiece.isWhite)
             {
-                gameManager.possibleAttacks.Add(rightAttack.collider.gameObject);
-
+                Debug.Log("Can attack right");
                 Vector2 move = new Vector2(1, chessPiece.isWhite ? 1 : -1);
                 gameManager.possibleMoves.Add(move);
             }
@@ -244,6 +250,14 @@ public class PieceBehaviour : MonoBehaviour
 
     void KingCheckForCastle(Vector3 direction, Vector2 moveDirection)
     {
+        King king = activePiece.gameObject.GetComponent<King>();
+
+        //if the king has ever moved, no castling is ever allowed.
+        if (king.hasMoved)
+        {
+            return;
+        }
+
         Ray ray = new Ray(activePiece.transform.position, direction);
         RaycastHit hit;
 
@@ -251,10 +265,11 @@ public class PieceBehaviour : MonoBehaviour
         {
             if (hit.collider.gameObject.tag == "Rook")
             {
+                //there is a clear path between the king and the rook.
                 if (hit.collider.gameObject.GetComponent<ChessPiece>().hasMoved == false)
                 {
-                    float moveMagnitude = Mathf.Abs(activePiece.transform.localPosition.x - hit.transform.localPosition.x) - 1;
-                    Vector2 move = moveDirection * moveMagnitude;
+                    //the rook has also not moved, therefore castling is allowed. King can move 2 sqaures to the side. 
+                    Vector2 move = moveDirection * 2;
                     gameManager.possibleMoves.Add(move);
                 }
             }

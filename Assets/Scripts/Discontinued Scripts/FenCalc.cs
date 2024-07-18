@@ -1,9 +1,5 @@
-using JetBrains.Annotations;
-using System.Collections;
-using System.Collections.Generic;
-//using System.Diagnostics;
-using Unity.Burst.CompilerServices;
 using UnityEngine;
+using System.Threading.Tasks;
 
 public class FenCalc : MonoBehaviour
 {
@@ -23,14 +19,16 @@ public class FenCalc : MonoBehaviour
     public GameObject squareMovingFrom;
     public GameObject movingPiece;
 
+    public Canvas whiteWinsCanvas;
+    public Canvas blackWinsCanvas;
+
     public StockfishInterface stockFish;
 
     // Start is called before the first frame update
     void Start()
     {
         //initialize the fen code. 
-        FenCode = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR";
-        FenCodeOtherHalf = " w KQkq - 0 1";
+        FenCode = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
         manager = GetComponent<GameManager>();
     }
 
@@ -97,8 +95,8 @@ public class FenCalc : MonoBehaviour
 
         newFenCode += fullMoveNumber.ToString();
 
+        Debug.Log(newFenCode);
         GetBestMove(newFenCode);
-
     }
 
     public async void GetBestMove(string fen)
@@ -111,20 +109,22 @@ public class FenCalc : MonoBehaviour
         {
             if (manager.isWhitesMove)
             {
-                Debug.Log("CHECKMATE: BLACK WINS");
+                blackWinsCanvas.enabled = true;
             }
             else
             {
-                Debug.Log("CHECKMATE: WHITE WINS");
+                whiteWinsCanvas.enabled = true;
             }
         }
         else
         {
-            string currentSquare = (bestMove[0].ToString() + bestMove[1].ToString());
-            string destinationSquare = (bestMove[2].ToString() + bestMove[3].ToString());
-
-            squareToMoveTo = GameObject.Find(destinationSquare);
-            squareMovingFrom = GameObject.Find(currentSquare);
+            if (bestMove.Length >= 4)
+            {
+                string currentSquare = bestMove.Substring(0, 2);
+                string destinationSquare = bestMove.Substring(2, 2);
+                squareToMoveTo = GameObject.Find(destinationSquare);
+                squareMovingFrom = GameObject.Find(currentSquare);
+            }
 
             RaycastHit hit;
             squareMovingFrom.GetComponent<Collider>().enabled = false;
@@ -133,11 +133,15 @@ public class FenCalc : MonoBehaviour
             {
                 movingPiece = hit.collider.gameObject;
 
+                await Task.Delay(1000);
+                movingPiece.GetComponent<DragDrop>().AIMoveInit();
+                movingPiece.GetComponent<DragDrop>().AIMove(new Vector3(squareToMoveTo.transform.position.x, squareToMoveTo.transform.position.y, movingPiece.transform.position.z));
+
                 if (!manager.isWhitesMove)
                 {
-                    Debug.Log("AI will move piece now");
-                    movingPiece.GetComponent<DragDrop>().AIMoveInit();
-                    movingPiece.GetComponent<DragDrop>().AIMove(new Vector3(squareToMoveTo.transform.position.x, squareToMoveTo.transform.position.y, movingPiece.transform.position.z));
+                    //await Task.Delay(1000);
+                    //movingPiece.GetComponent<DragDrop>().AIMoveInit();
+                    //movingPiece.GetComponent<DragDrop>().AIMove(new Vector3(squareToMoveTo.transform.position.x, squareToMoveTo.transform.position.y, movingPiece.transform.position.z));   
                 }
             }
 

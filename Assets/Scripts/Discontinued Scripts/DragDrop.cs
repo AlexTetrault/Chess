@@ -1,10 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.Burst.CompilerServices;
-using Unity.VisualScripting;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
-using static UnityEngine.UI.Image;
 
 public class DragDrop : MonoBehaviour
 {
@@ -50,23 +44,39 @@ public class DragDrop : MonoBehaviour
 
     public void AIMoveInit()
     {
+        if (piece.isWhite != gameManager.isWhitesMove)
+        {
+            return;
+        }
+
         piece.LineOfSight();
+        SwitchTransparency();
         startPos = transform.localPosition;
         realStartPos = transform.position;
+        difference = (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition) - (Vector2)transform.position;
+        gameManager.ShowAvailMoves(realStartPos);
     }
 
     public void AIMove(Vector3 move)
     {
         transform.position = move;
+
+        if (piece.isWhite != gameManager.isWhitesMove)
+        {
+            return;
+        }
+        SwitchTransparency();
         SnapToClosestSquare();
+        CheckDragIsOutsideBoard();
         CheckIfMoveIsValid();
         CheckIfCastling();
+        ClearEnPassantPrivilages();
         CheckForEnPassant();
         EnpassantTake();
         CheckForPawnPromotion();
+        RevertSelectSquareColor();
 
         gameManager.possibleMoves.Clear();
-        gameManager.possibleAttacks.Clear();
 
         if (piece.isWhite)
         {
@@ -78,10 +88,9 @@ public class DragDrop : MonoBehaviour
                     gameManager.blackPieces[i].GetComponent<DragDrop>().enabled = false;
                     gameManager.blackPieces[i].GetComponent<Collider>().enabled = false;
                     gameManager.blackPieces.RemoveAt(i);
-                    gameManager.ChangeTurn();
                     fenCalc.halfMoveNumber = 0;
-                    fenCalc.UpdateFenCode();
-                    return;
+
+                    break;
                 }
             }
         }
@@ -95,10 +104,9 @@ public class DragDrop : MonoBehaviour
                     gameManager.whitePieces[i].GetComponent<DragDrop>().enabled = false;
                     gameManager.whitePieces[i].GetComponent<Collider>().enabled = false;
                     gameManager.whitePieces.RemoveAt(i);
-                    gameManager.ChangeTurn();
                     fenCalc.halfMoveNumber = 0;
-                    fenCalc.UpdateFenCode();
-                    return;
+
+                    break;
                 }
             }
         }
@@ -144,7 +152,6 @@ public class DragDrop : MonoBehaviour
         RevertSelectSquareColor();
 
         gameManager.possibleMoves.Clear();
-        gameManager.possibleAttacks.Clear();
 
         if (piece.isWhite)
         {
@@ -156,10 +163,9 @@ public class DragDrop : MonoBehaviour
                     gameManager.blackPieces[i].GetComponent<DragDrop>().enabled = false;
                     gameManager.blackPieces[i].GetComponent<Collider>().enabled = false;
                     gameManager.blackPieces.RemoveAt(i);
-                    gameManager.ChangeTurn();
                     fenCalc.halfMoveNumber = 0;
-                    fenCalc.UpdateFenCode();
-                    return;
+
+                    break;
                 }
             }
         }
@@ -173,10 +179,9 @@ public class DragDrop : MonoBehaviour
                     gameManager.whitePieces[i].GetComponent<DragDrop>().enabled = false;
                     gameManager.whitePieces[i].GetComponent<Collider>().enabled = false;
                     gameManager.whitePieces.RemoveAt(i);
-                    gameManager.ChangeTurn();
                     fenCalc.halfMoveNumber = 0;
-                    fenCalc.UpdateFenCode();
-                    return;
+
+                    break;
                 }
             }
         }
@@ -259,7 +264,6 @@ public class DragDrop : MonoBehaviour
             {
                 if (transform.localPosition.x - startPos.x > 0)
                 {
-                    Debug.Log("I am castling to the right");
                     RaycastHit hit;
 
                     if (Physics.Raycast(transform.position, Vector3.right, out hit, 5f)) {
@@ -393,6 +397,33 @@ public class DragDrop : MonoBehaviour
 
         Vector2 currentPos = transform.localPosition;
 
+        GameObject attackedPiece = null;
+
+        if (piece.isWhite)
+        {
+            for (int i = 0; i < gameManager.blackPieces.Count; i++)
+            {
+                if (piece.transform.localPosition == gameManager.blackPieces[i].transform.localPosition)
+                {
+                    attackedPiece = gameManager.blackPieces[i];
+                    gameManager.blackPieces[i].GetComponent<Collider>().enabled = false;
+                    break;
+                }
+            }
+        }
+        else
+        {
+            for (int i = 0; i < gameManager.whitePieces.Count; i++)
+            {
+                if (piece.transform.localPosition == gameManager.whitePieces[i].transform.localPosition)
+                {
+                    attackedPiece = gameManager.blackPieces[i];
+                    gameManager.whitePieces[i].GetComponent<Collider>().enabled = false;
+                    break;
+                }
+            }
+        }
+
         CheckForCheck();
 
         if (!piece.myKing.isInCheck)
@@ -409,6 +440,10 @@ public class DragDrop : MonoBehaviour
         }
 
         transform.localPosition = startPos;
+        if (attackedPiece != null)
+        {
+            attackedPiece.GetComponent<Collider>().enabled = true;
+        }
     }
 
     void CheckForCheck()

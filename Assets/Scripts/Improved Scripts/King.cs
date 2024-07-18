@@ -1,8 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class King : MonoBehaviour
 {
     public bool isInCheck = false;
+    public bool hasMoved = false;
 }

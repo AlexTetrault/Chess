@@ -1,4 +1,3 @@
-using System;
 using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
@@ -44,6 +43,7 @@ public class StockfishInterface : MonoBehaviour
 
     public async Task<string> GetBestMove(string fen, int difficulty)
     {
+
         if (!isRunning)
         {
             //Debug.LogError("Stockfish process is not running.");
@@ -53,11 +53,12 @@ public class StockfishInterface : MonoBehaviour
         await SendCommand("position fen " + fen);
 
         int skillLevel = Mathf.Clamp(difficulty, 0, 20);
-        await SendCommand($"setoption name Skill Level value {skillLevel}");
 
+        await SendCommand($"setoption name Skill Level value {skillLevel}");
         await SendCommand("go depth 3"); // Adjust depth as needed  
 
         string bestMove = string.Empty;
+
         while (true)
         {
             string output = await stockfishOutput.ReadLineAsync();
@@ -79,7 +80,7 @@ public class StockfishInterface : MonoBehaviour
             return;
         }
 
-        stockfishInput.WriteLine(command);
+        await stockfishInput.WriteLineAsync(command);
         await stockfishInput.FlushAsync();
     }
 

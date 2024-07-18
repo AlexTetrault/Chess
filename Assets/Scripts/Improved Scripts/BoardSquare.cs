@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BoardSquare : MonoBehaviour
@@ -10,12 +8,6 @@ public class BoardSquare : MonoBehaviour
     void Start()
     {
         squareColor = GetComponent<SpriteRenderer>().color;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     public void ResetColor()
