@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
 using Unity.Burst.CompilerServices;
 using UnityEngine;
 
@@ -21,6 +22,8 @@ public class MouseDrag : MonoBehaviour
     public GameManager gameManager;
 
     public PawnPromotion pawnPromotion;
+
+    public ChessBoard chessBoard;
 
 
     // Start is called before the first frame update
@@ -104,9 +107,23 @@ public class MouseDrag : MonoBehaviour
             return;
         }
 
+        //refresh en passant info before calculating
+        if (gameManager.pawnsAllowedToEnPassant.Count > 0)
+        {
+            foreach (GameObject pawn in gameManager.pawnsAllowedToEnPassant)
+            {
+                pawn.GetComponent<ChessPiece>().canEnPassant = false;
+            }
+        }
+
+        gameManager.pawnsAllowedToEnPassant.Clear();
+
         chessPiece.hasMoved = true;
         gameManager.AttackEnemyPiece(gameObject);
+
         CheckIfCastling(initialPos.x, newPos.x);
+        CheckIfDoingEnPassant(initialPos, newPos);
+        NotifyNeighborsOfEnPassant(initialPos.y, newPos.y);
         CheckIPromotingPawn();
         gameManager.ChangeTurn();
         fenCalculator.enPassantSquareCode = CalculateEnPassantCode(initialPos.y, newPos.y);
@@ -138,6 +155,74 @@ public class MouseDrag : MonoBehaviour
                 spriteRenderer.sprite = pawnPromotion.queenSpriteB;
                 gameObject.tag = "Queen";
             }
+        }
+    }
+
+    void NotifyNeighborsOfEnPassant(float initialPosY, float newPosY)
+    {
+        if (tag != "Pawn")
+        {
+            return;
+        }
+
+        if (Mathf.Round(Mathf.Abs(initialPosY - newPosY)) != 2)
+        {
+            return;
+        }
+
+        pieceBehaviour.enPassantVictim = gameObject;
+
+        RaycastHit leftHit;
+        RaycastHit rightHit;
+
+        gameObject.GetComponent<Collider>().enabled = false;
+
+        if (Physics.Raycast(transform.position, Vector3.left, out leftHit, 1.5f))
+        {
+            if (leftHit.collider.gameObject.tag != "Pawn")
+            {
+                gameObject.GetComponent<Collider>().enabled = true;
+                return;
+            }
+
+            if (leftHit.collider.GetComponent<ChessPiece>().isWhite == chessPiece.isWhite)
+            {
+                gameObject.GetComponent<Collider>().enabled = true;
+                return;
+            }
+
+            leftHit.collider.GetComponent<ChessPiece>().canEnPassant = true;
+            gameManager.pawnsAllowedToEnPassant.Add(leftHit.collider.gameObject);
+        }
+
+        if (Physics.Raycast(transform.position, Vector3.right, out rightHit, 1.5f))
+        {
+            if (rightHit.collider.gameObject.tag != "Pawn")
+            {
+                gameObject.GetComponent<Collider>().enabled = true;
+                return;
+            }
+
+            if (rightHit.collider.GetComponent<ChessPiece>().isWhite == chessPiece.isWhite)
+            {
+                gameObject.GetComponent<Collider>().enabled = true;
+                return;
+            }
+
+            rightHit.collider.GetComponent<ChessPiece>().canEnPassant = true;
+            gameManager.pawnsAllowedToEnPassant.Add(rightHit.collider.gameObject);
+        }
+
+        gameObject.GetComponent<Collider>().enabled = true;
+    }
+
+    void CheckIfDoingEnPassant(Vector2 initialPos, Vector2 newPos)
+    {
+        if (Mathf.Abs(initialPos.x - newPos.x) == 1 && Mathf.Abs(initialPos.y - newPos.y) == 1) 
+        {
+            pieceBehaviour.enPassantVictim.GetComponent<SpriteRenderer>().enabled = false;
+            pieceBehaviour.enPassantVictim.GetComponent<Collider>().enabled = false;
+            chessBoard.chessPieces.Remove(pieceBehaviour.enPassantVictim);
         }
     }
 

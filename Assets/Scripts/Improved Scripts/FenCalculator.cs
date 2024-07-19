@@ -111,7 +111,7 @@ public class FenCalculator : MonoBehaviour
 
         try
         {
-            string bestMove = await stockFish.GetBestMove(fen, 15);
+            string bestMove = await stockFish.GetBestMove(fen, 5);
             Debug.Log("Best move received: " + bestMove);
 
             if (bestMove == "(none)")
@@ -135,7 +135,7 @@ public class FenCalculator : MonoBehaviour
                 {
                     movingPiece = hit.collider.gameObject;
 
-                    await Task.Delay(200); // Delay before making move
+                    await Task.Delay(1000); // Delay before making move
 
                     if (movingPiece != null && squareToMoveTo != null)
                     {
@@ -152,7 +152,7 @@ public class FenCalculator : MonoBehaviour
         }
         catch (Exception e)
         {
-            Debug.LogError("Error in GetBestMove: " + e.Message);
+           
         }
     }
 

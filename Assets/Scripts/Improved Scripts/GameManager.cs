@@ -21,6 +21,8 @@ public class GameManager : MonoBehaviour
 
     public ChessBoard chessBoard;
 
+    public List<GameObject> pawnsAllowedToEnPassant = new List<GameObject>();
+
     int layerMask;
 
     private void Start()

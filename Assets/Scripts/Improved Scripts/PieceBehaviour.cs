@@ -7,6 +7,7 @@ public class PieceBehaviour : MonoBehaviour
     public GameManager gameManager;
     public Canvas pawnPromotionCanvas;
     public PawnPromotion pawnPromotion;
+    public FenCalculator fenCalculator;
 
     [HideInInspector] public GameObject activePiece;
     [HideInInspector] public ChessPiece chessPiece;
@@ -113,11 +114,9 @@ public class PieceBehaviour : MonoBehaviour
 
             if (leftAttack.collider.gameObject.GetComponent<ChessPiece>().isWhite != chessPiece.isWhite)
             {
-                Debug.Log("Can attack left");
                 Vector2 move = new Vector2(-1, chessPiece.isWhite ? 1 : -1);
                 gameManager.possibleMoves.Add(move);
             }
-
         }
 
         if (Physics.Raycast(rightAttackRay, out rightAttack, 2))
@@ -129,7 +128,6 @@ public class PieceBehaviour : MonoBehaviour
 
             if (rightAttack.collider.gameObject.GetComponent<ChessPiece>().isWhite != chessPiece.isWhite)
             {
-                Debug.Log("Can attack right");
                 Vector2 move = new Vector2(1, chessPiece.isWhite ? 1 : -1);
                 gameManager.possibleMoves.Add(move);
             }
@@ -137,8 +135,11 @@ public class PieceBehaviour : MonoBehaviour
 
         if (chessPiece.canEnPassant)
         {
-            Vector2 enPassantLocation = new Vector2(enPassantSquare.transform.position.x - activePiece.transform.position.x, enPassantSquare.transform.position.y - activePiece.transform.position.y);
-            gameManager.possibleMoves.Add(enPassantLocation);
+            enPassantSquare = GameObject.Find(fenCalculator.enPassantSquareCode);
+            Vector2 enPassantLocation = enPassantSquare.transform.localPosition;
+            Vector2 currentLocation = activePiece.transform.localPosition;
+            Vector2 move = enPassantLocation - currentLocation;
+            gameManager.possibleMoves.Add(move);
         }
 
         pieceCollider.enabled = true;

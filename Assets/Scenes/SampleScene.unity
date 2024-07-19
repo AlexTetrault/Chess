@@ -961,6 +961,7 @@ MonoBehaviour:
   pieceBehaviour: {fileID: 751887651}
   gameManager: {fileID: 751887650}
   pawnPromotion: {fileID: 556250915}
+  chessBoard: {fileID: 1399993258}
 --- !u!114 &92801260
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1850,6 +1851,7 @@ MonoBehaviour:
   pieceBehaviour: {fileID: 751887651}
   gameManager: {fileID: 751887650}
   pawnPromotion: {fileID: 556250915}
+  chessBoard: {fileID: 1399993258}
 --- !u!114 &201042603
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1991,6 +1993,7 @@ MonoBehaviour:
   pieceBehaviour: {fileID: 751887651}
   gameManager: {fileID: 751887650}
   pawnPromotion: {fileID: 556250915}
+  chessBoard: {fileID: 1399993258}
 --- !u!114 &233095429
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2326,6 +2329,7 @@ MonoBehaviour:
   pieceBehaviour: {fileID: 751887651}
   gameManager: {fileID: 751887650}
   pawnPromotion: {fileID: 556250915}
+  chessBoard: {fileID: 1399993258}
 --- !u!114 &243687965
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2543,6 +2547,7 @@ MonoBehaviour:
   pieceBehaviour: {fileID: 751887651}
   gameManager: {fileID: 751887650}
   pawnPromotion: {fileID: 556250915}
+  chessBoard: {fileID: 1399993258}
 --- !u!114 &296988203
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3227,6 +3232,7 @@ MonoBehaviour:
   pieceBehaviour: {fileID: 751887651}
   gameManager: {fileID: 751887650}
   pawnPromotion: {fileID: 556250915}
+  chessBoard: {fileID: 1399993258}
 --- !u!114 &383451114
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3992,6 +3998,7 @@ MonoBehaviour:
   pieceBehaviour: {fileID: 751887651}
   gameManager: {fileID: 751887650}
   pawnPromotion: {fileID: 556250915}
+  chessBoard: {fileID: 1399993258}
 --- !u!114 &486229886
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4252,6 +4259,7 @@ MonoBehaviour:
   pieceBehaviour: {fileID: 751887651}
   gameManager: {fileID: 751887650}
   pawnPromotion: {fileID: 556250915}
+  chessBoard: {fileID: 1399993258}
 --- !u!114 &512440188
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6079,15 +6087,15 @@ MonoBehaviour:
   - {fileID: 296988195}
   isWhitesMove: 0
   possibleMoves:
-  - {x: 1, y: -1}
-  - {x: -1, y: -1}
-  - {x: 0, y: -1}
+  - {x: 1, y: 2}
+  - {x: -1, y: 2}
   whiteControlledSpaces: []
   blackControlledSpaces: []
   availSquares: []
   blackKing: {fileID: 2052469159}
   whiteKing: {fileID: 296988195}
   chessBoard: {fileID: 1399993258}
+  pawnsAllowedToEnPassant: []
 --- !u!114 &751887651
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6103,12 +6111,13 @@ MonoBehaviour:
   gameManager: {fileID: 751887650}
   pawnPromotionCanvas: {fileID: 556250913}
   pawnPromotion: {fileID: 556250915}
-  activePiece: {fileID: 296988195}
-  chessPiece: {fileID: 296988203}
+  fenCalculator: {fileID: 751887649}
+  activePiece: {fileID: 1552662193}
+  chessPiece: {fileID: 1552662201}
   enPassantPawns: []
   enPassantVictim: {fileID: 0}
   enPassantSquare: {fileID: 0}
-  pieceCollider: {fileID: 296988201}
+  pieceCollider: {fileID: 1552662199}
 --- !u!1 &825186264
 GameObject:
   m_ObjectHideFlags: 0
@@ -6352,6 +6361,7 @@ MonoBehaviour:
   pieceBehaviour: {fileID: 751887651}
   gameManager: {fileID: 751887650}
   pawnPromotion: {fileID: 556250915}
+  chessBoard: {fileID: 1399993258}
 --- !u!114 &837197886
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6899,6 +6909,7 @@ MonoBehaviour:
   pieceBehaviour: {fileID: 751887651}
   gameManager: {fileID: 751887650}
   pawnPromotion: {fileID: 556250915}
+  chessBoard: {fileID: 1399993258}
 --- !u!114 &1002935615
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7040,6 +7051,7 @@ MonoBehaviour:
   pieceBehaviour: {fileID: 751887651}
   gameManager: {fileID: 751887650}
   pawnPromotion: {fileID: 556250915}
+  chessBoard: {fileID: 1399993258}
 --- !u!114 &1017529644
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7181,6 +7193,7 @@ MonoBehaviour:
   pieceBehaviour: {fileID: 751887651}
   gameManager: {fileID: 751887650}
   pawnPromotion: {fileID: 556250915}
+  chessBoard: {fileID: 1399993258}
 --- !u!114 &1020458705
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7322,6 +7335,7 @@ MonoBehaviour:
   pieceBehaviour: {fileID: 751887651}
   gameManager: {fileID: 751887650}
   pawnPromotion: {fileID: 556250915}
+  chessBoard: {fileID: 1399993258}
 --- !u!114 &1026402780
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7463,6 +7477,7 @@ MonoBehaviour:
   pieceBehaviour: {fileID: 751887651}
   gameManager: {fileID: 751887650}
   pawnPromotion: {fileID: 556250915}
+  chessBoard: {fileID: 1399993258}
 --- !u!114 &1052006752
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7604,6 +7619,7 @@ MonoBehaviour:
   pieceBehaviour: {fileID: 751887651}
   gameManager: {fileID: 751887650}
   pawnPromotion: {fileID: 556250915}
+  chessBoard: {fileID: 1399993258}
 --- !u!114 &1063738787
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7864,6 +7880,7 @@ MonoBehaviour:
   pieceBehaviour: {fileID: 751887651}
   gameManager: {fileID: 751887650}
   pawnPromotion: {fileID: 556250915}
+  chessBoard: {fileID: 1399993258}
 --- !u!114 &1115165018
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8425,6 +8442,7 @@ MonoBehaviour:
   pieceBehaviour: {fileID: 751887651}
   gameManager: {fileID: 751887650}
   pawnPromotion: {fileID: 556250915}
+  chessBoard: {fileID: 1399993258}
 --- !u!114 &1176235587
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9057,6 +9075,7 @@ MonoBehaviour:
   pieceBehaviour: {fileID: 751887651}
   gameManager: {fileID: 751887650}
   pawnPromotion: {fileID: 556250915}
+  chessBoard: {fileID: 1399993258}
 --- !u!114 &1198917546
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10269,6 +10288,7 @@ MonoBehaviour:
   pieceBehaviour: {fileID: 751887651}
   gameManager: {fileID: 751887650}
   pawnPromotion: {fileID: 556250915}
+  chessBoard: {fileID: 1399993258}
 --- !u!114 &1387441148
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10490,6 +10510,7 @@ MonoBehaviour:
   pieceBehaviour: {fileID: 751887651}
   gameManager: {fileID: 751887650}
   pawnPromotion: {fileID: 556250915}
+  chessBoard: {fileID: 1399993258}
 --- !u!114 &1419735972
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10631,6 +10652,7 @@ MonoBehaviour:
   pieceBehaviour: {fileID: 751887651}
   gameManager: {fileID: 751887650}
   pawnPromotion: {fileID: 556250915}
+  chessBoard: {fileID: 1399993258}
 --- !u!114 &1528793405
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10891,6 +10913,7 @@ MonoBehaviour:
   pieceBehaviour: {fileID: 751887651}
   gameManager: {fileID: 751887650}
   pawnPromotion: {fileID: 556250915}
+  chessBoard: {fileID: 1399993258}
 --- !u!114 &1539885839
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11151,6 +11174,7 @@ MonoBehaviour:
   pieceBehaviour: {fileID: 751887651}
   gameManager: {fileID: 751887650}
   pawnPromotion: {fileID: 556250915}
+  chessBoard: {fileID: 1399993258}
 --- !u!114 &1552662201
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12021,6 +12045,7 @@ MonoBehaviour:
   pieceBehaviour: {fileID: 751887651}
   gameManager: {fileID: 751887650}
   pawnPromotion: {fileID: 556250915}
+  chessBoard: {fileID: 1399993258}
 --- !u!114 &1714739508
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12281,6 +12306,7 @@ MonoBehaviour:
   pieceBehaviour: {fileID: 751887651}
   gameManager: {fileID: 751887650}
   pawnPromotion: {fileID: 556250915}
+  chessBoard: {fileID: 1399993258}
 --- !u!114 &1763658929
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12422,6 +12448,7 @@ MonoBehaviour:
   pieceBehaviour: {fileID: 751887651}
   gameManager: {fileID: 751887650}
   pawnPromotion: {fileID: 556250915}
+  chessBoard: {fileID: 1399993258}
 --- !u!114 &1773627135
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12920,6 +12947,7 @@ MonoBehaviour:
   pieceBehaviour: {fileID: 751887651}
   gameManager: {fileID: 751887650}
   pawnPromotion: {fileID: 556250915}
+  chessBoard: {fileID: 1399993258}
 --- !u!114 &1887903593
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13061,6 +13089,7 @@ MonoBehaviour:
   pieceBehaviour: {fileID: 751887651}
   gameManager: {fileID: 751887650}
   pawnPromotion: {fileID: 556250915}
+  chessBoard: {fileID: 1399993258}
 --- !u!114 &1893161355
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13693,6 +13722,7 @@ MonoBehaviour:
   pieceBehaviour: {fileID: 751887651}
   gameManager: {fileID: 751887650}
   pawnPromotion: {fileID: 556250915}
+  chessBoard: {fileID: 1399993258}
 --- !u!114 &1955733975
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14057,6 +14087,7 @@ MonoBehaviour:
   pieceBehaviour: {fileID: 751887651}
   gameManager: {fileID: 751887650}
   pawnPromotion: {fileID: 556250915}
+  chessBoard: {fileID: 1399993258}
 --- !u!114 &2052469167
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14212,6 +14243,7 @@ MonoBehaviour:
   pieceBehaviour: {fileID: 751887651}
   gameManager: {fileID: 751887650}
   pawnPromotion: {fileID: 556250915}
+  chessBoard: {fileID: 1399993258}
 --- !u!114 &2080036578
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14353,6 +14385,7 @@ MonoBehaviour:
   pieceBehaviour: {fileID: 751887651}
   gameManager: {fileID: 751887650}
   pawnPromotion: {fileID: 556250915}
+  chessBoard: {fileID: 1399993258}
 --- !u!114 &2085184644
 MonoBehaviour:
   m_ObjectHideFlags: 0
