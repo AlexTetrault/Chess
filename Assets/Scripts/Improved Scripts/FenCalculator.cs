@@ -22,8 +22,15 @@ public class FenCalculator : MonoBehaviour
     public GameObject squareToMoveTo;
     public GameObject squareMovingFrom;
     public GameObject movingPiece;
+    public string fenCode;
 
-    public void UpdateFenCode()
+    private void Start()
+    {
+        //initialize the fenCode
+        fenCode = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
+    }
+
+    public async void UpdateFenCode()
     {
         chessBoard.UpdateBoardGrid();
 
@@ -77,7 +84,13 @@ public class FenCalculator : MonoBehaviour
 
         newFenCode += "0 1"; // Simplified for illustration
 
-        GetBestMove(newFenCode);
+        fenCode = newFenCode;
+
+        Debug.Log(newFenCode);
+
+        gameManager.legalMoves = await stockFish.CalculateLegalMoveList(newFenCode);
+        string suggestedMove = await GetBestMove(newFenCode);
+        Debug.Log(suggestedMove);
     }
 
     string CalculateCastles()
@@ -105,55 +118,16 @@ public class FenCalculator : MonoBehaviour
 
     }
 
-    public async void GetBestMove(string fen)
+    public async Task <string> GetBestMove(string fen)
     {
-        Debug.Log("GetBestMove called with FEN: " + fen);
+        string bestMove = await stockFish.GetBestMove(fen, 5);
 
-        try
+        if (bestMove == "(none)")
         {
-            string bestMove = await stockFish.GetBestMove(fen, 5);
-            Debug.Log("Best move received: " + bestMove);
-
-            if (bestMove == "(none)")
-            {
-                ShowEndGameCanvas();
-                return;
-            }
-
-            string currentSquare = bestMove.Substring(0, 2);
-            string destinationSquare = bestMove.Substring(2, 2);
-
-            squareToMoveTo = GameObject.Find(destinationSquare);
-            squareMovingFrom = GameObject.Find(currentSquare);
-
-            if (squareMovingFrom != null)
-            {
-                squareMovingFrom.GetComponent<Collider>().enabled = false;
-
-                RaycastHit hit;
-                if (Physics.Raycast(squareMovingFrom.transform.position, Vector3.back, out hit))
-                {
-                    movingPiece = hit.collider.gameObject;
-
-                    await Task.Delay(1000); // Delay before making move
-
-                    if (movingPiece != null && squareToMoveTo != null)
-                    {
-                        movingPiece.GetComponent<MouseDrag>().AIMove(squareToMoveTo.transform.localPosition);
-                    }
-                    else
-                    {
-                        Debug.Log("Didn't have the info required");
-                    }
-                }
-
-                squareMovingFrom.GetComponent<Collider>().enabled = true;
-            }
+            string staleorcheck = await stockFish.CheckIfMate(fen);
+            return staleorcheck;
         }
-        catch (Exception e)
-        {
-           
-        }
+        return bestMove;
     }
 
     void ShowEndGameCanvas()

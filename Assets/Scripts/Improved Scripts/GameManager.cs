@@ -7,12 +7,10 @@ public class GameManager : MonoBehaviour
     public List<GameObject> blackPieces = new List<GameObject>();
     public List<GameObject> whitePieces = new List<GameObject>();
 
+    public string moveCode;
     public bool isWhitesMove;
 
     public List<Vector2> possibleMoves = new List<Vector2>();
-
-    public List<Vector2> whiteControlledSpaces = new List<Vector2>();
-    public List<Vector2> blackControlledSpaces = new List<Vector2>();
 
     public List<GameObject> availSquares;
 
@@ -23,11 +21,10 @@ public class GameManager : MonoBehaviour
 
     public List<GameObject> pawnsAllowedToEnPassant = new List<GameObject>();
 
-    int layerMask;
+    public List<string> legalMoves = new List<string>();
 
     private void Start()
     {
-        layerMask = LayerMask.GetMask("Square");
         isWhitesMove = true;
         possibleMoves.Clear();
     }
@@ -35,31 +32,6 @@ public class GameManager : MonoBehaviour
     public void ChangeTurn()
     {
         isWhitesMove = isWhitesMove? false : true;
-    }
-
-    public void ShowAvailMoves(Vector2 startPos)
-    {
-        for (int i = 0; i < possibleMoves.Count; i++)
-        {
-            Vector2 origin = startPos + possibleMoves[i];
-            Vector3 rayOrigin = new Vector3(origin.x, origin.y, -1f);
-            RaycastHit hit;
-
-            if (Physics.Raycast(rayOrigin, Vector3.forward, out hit, 10, layerMask))
-            {
-                // If the ray hits an object in the "Square" layer
-                availSquares.Add(hit.collider.gameObject);
-                hit.collider.gameObject.GetComponent<SpriteRenderer>().color = Color.blue;
-            }
-        }
-    }
-
-    public void HideAvailMoves()
-    {
-        foreach (GameObject square in availSquares)
-        {
-            square.GetComponent<BoardSquare>().ResetColor();
-        }
     }
 
     public void AttackEnemyPiece(GameObject activePiece)

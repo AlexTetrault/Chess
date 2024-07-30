@@ -12,8 +12,6 @@ public class MouseDrag : MonoBehaviour
     SpriteRenderer spriteRenderer;
     ChessPiece chessPiece;
 
-    float minBoardRange, maxBoardRange;
-
     Color opaque = new Color(1f, 1f, 1f, 1f);
     Color translucent = new Color(1f, 1f, 1f, 0.75f);
 
@@ -31,18 +29,6 @@ public class MouseDrag : MonoBehaviour
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         chessPiece = GetComponent<ChessPiece>();
-        minBoardRange = -0.5f;
-        maxBoardRange = 7.5f;
-    }
-
-    public void AIMove(Vector3 newPos)
-    {
-        gameManager.possibleMoves.Clear();
-        pieceBehaviour.activePiece = gameObject;
-        pieceBehaviour.LineOfSight();
-        initialPos = transform.localPosition;
-        transform.localPosition = newPos;
-        SnapToClosestSquare();
     }
 
     private void OnMouseDown()
@@ -52,15 +38,29 @@ public class MouseDrag : MonoBehaviour
         {
             return;
         }
+
         gameManager.possibleMoves.Clear();
+        gameManager.moveCode = string.Empty;
+
+        //create a raycast behind the board and see what square the piece is on.
+        RaycastHit hit;
+        Vector3 rayOrigin = new Vector3(transform.position.x, transform.position.y, 10);
+
+        if (Physics.Raycast(rayOrigin, Vector3.back, out hit))
+        {
+            if (hit.collider.tag == "Square")
+            {
+                gameManager.moveCode += hit.collider.gameObject.name;
+            }
+        }
 
         initialPos = transform.localPosition;
         difference = (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition) - (Vector2)transform.position;
-        spriteRenderer.color = translucent;
 
+        spriteRenderer.color = translucent;
         pieceBehaviour.activePiece = gameObject;
-        pieceBehaviour.LineOfSight();
-        gameManager.ShowAvailMoves(initialPos);
+        //pieceBehaviour.LineOfSight();
+        //gameManager.ShowAvailMoves(initialPos);
     }
 
     private void OnMouseDrag()
@@ -81,31 +81,40 @@ public class MouseDrag : MonoBehaviour
         {
             return;
         }
+
+        //create a raycast behind the board and see what square the piece is moving to.
+        RaycastHit hit;
+        Vector3 rayOrigin = new Vector3(transform.position.x, transform.position.y, 10);
+
+        if (Physics.Raycast(rayOrigin, Vector3.back, out hit))
+        {
+            if (hit.collider.tag == "Square")
+            {
+                gameManager.moveCode += hit.collider.gameObject.name;
+            }
+        }
+
+        if (!gameManager.legalMoves.Contains(gameManager.moveCode))
+        {
+            transform.localPosition = initialPos;
+            spriteRenderer.color = opaque;
+            return;
+        }
+
+        Vector2 newPos = new Vector2(hit.transform.position.x, hit.transform.position.y);
         spriteRenderer.color = opaque;
-        SnapToClosestSquare();
-        gameManager.HideAvailMoves();
+        SnapToSquare(newPos);
+        //gameManager.HideAvailMoves();
     }
 
-    private void SnapToClosestSquare()
+    public void AIMove(Vector3 newPos)
     {
-        Vector2 currentPos = transform.localPosition;
-        Vector2 newPos = new Vector2(Mathf.Round(currentPos.x), Mathf.Round(currentPos.y));
 
-        if (currentPos.x < minBoardRange || currentPos.x > maxBoardRange || currentPos.y < minBoardRange || currentPos.y > maxBoardRange)
-        {
-            //drag is out of bounds, revert back to inital position
-            transform.localPosition = initialPos;
-            return;
-        }
+    }
 
+    private void SnapToSquare(Vector2 newPos)
+    {
         transform.localPosition = newPos;
-
-        if (!pieceBehaviour.ValidMove(initialPos, newPos))
-        {
-            //move was not one of the valid possibilities calculated, revert back to initial position
-            transform.localPosition = initialPos;
-            return;
-        }
 
         //refresh en passant info before calculating
         if (gameManager.pawnsAllowedToEnPassant.Count > 0)

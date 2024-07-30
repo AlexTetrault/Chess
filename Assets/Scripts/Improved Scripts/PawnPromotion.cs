@@ -1,10 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PawnPromotion : MonoBehaviour
 {
-    public FenCalc fenCal;
+    public FenCalculator fenCal;
 
     public GameObject promotingPawn;
     public Sprite rookSpriteW;

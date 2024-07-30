@@ -11,8 +11,9 @@ public class ChessBoard : MonoBehaviour
 
     void Start()
     {
-        UpdateBoardGrid();
+        //initialize fen code
         fenCalculator.enPassantSquareCode = "-";
+        fenCalculator.UpdateFenCode();
     }
 
     public void UpdateBoardGrid()
