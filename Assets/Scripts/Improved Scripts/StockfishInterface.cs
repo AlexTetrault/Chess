@@ -119,10 +119,12 @@ public class StockfishInterface : MonoBehaviour
 
         if (output.Contains("score cp 0"))
         {
+            gameManager.StaleMate();
             return "stalemate";
         }
         else
         {
+            gameManager.DetermineWinner();
             return "checkmate";
         }
     }

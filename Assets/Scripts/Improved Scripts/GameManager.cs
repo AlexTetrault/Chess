@@ -23,6 +23,10 @@ public class GameManager : MonoBehaviour
 
     public List<string> legalMoves = new List<string>();
 
+    public Canvas blackWins;
+    public Canvas whiteWins;
+    public Canvas staleMate;
+
     private void Start()
     {
         isWhitesMove = true;
@@ -75,6 +79,17 @@ public class GameManager : MonoBehaviour
             }
         }
 
+    }
+
+    public void DetermineWinner()
+    {
+        Canvas winner = isWhitesMove ? blackWins : whiteWins;
+        winner.enabled = true;
+    }
+
+    public void StaleMate()
+    {
+        staleMate.enabled = true;
     }
 }
 
