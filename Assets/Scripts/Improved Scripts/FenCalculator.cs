@@ -91,6 +91,14 @@ public class FenCalculator : MonoBehaviour
         gameManager.legalMoves = await stockFish.CalculateLegalMoveList(newFenCode);
         string suggestedMove = await GetBestMove(newFenCode);
         Debug.Log(suggestedMove);
+
+        if (!gameManager.isWhitesMove)
+        {
+            await Task.Delay(1000);
+            gameManager.moveCode = suggestedMove;
+            gameManager.possibleMoves.Clear();
+            gameManager.GenerateAIMove(suggestedMove);
+        }
     }
 
     string CalculateCastles()

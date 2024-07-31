@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class GameManager : MonoBehaviour
 {
@@ -9,6 +10,8 @@ public class GameManager : MonoBehaviour
 
     public string moveCode;
     public bool isWhitesMove;
+
+    public GameObject enPassantVictim;
 
     public List<Vector2> possibleMoves = new List<Vector2>();
 
@@ -19,13 +22,14 @@ public class GameManager : MonoBehaviour
 
     public ChessBoard chessBoard;
 
-    public List<GameObject> pawnsAllowedToEnPassant = new List<GameObject>();
-
     public List<string> legalMoves = new List<string>();
 
     public Canvas blackWins;
     public Canvas whiteWins;
     public Canvas staleMate;
+
+    public GameObject movingSquare;
+    public GameObject destinationSquare;
 
     private void Start()
     {
@@ -61,7 +65,7 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        //if moving piece is black, check to see if its position is the dame as any of the white pieces.
+        //if moving piece is black, check to see if its position is the same as any of the white pieces.
         else
         {
             foreach (GameObject whitePiece in whitePieces)
@@ -78,7 +82,31 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
+    }
 
+    public void GenerateAIMove(string moveCode)
+    {
+        Debug.Log("AI is going to move now");
+        //find the sqaure the AI wants to move from and to.
+        movingSquare = GameObject.Find(moveCode.Substring(0, 2));
+        destinationSquare = GameObject.Find(moveCode.Substring(2, 2));
+
+        //get reference to the chess piece the AI wants to move and move it to the same x and y position as the destination square.
+        RaycastHit hit;
+        Vector3 rayOrigin = new Vector3(movingSquare.transform.position.x, movingSquare.transform.position.y, -5);
+
+        Vector2 newPos = new Vector2(destinationSquare.transform.localPosition.x, destinationSquare.transform.localPosition.y);
+
+        if (Physics.Raycast(rayOrigin, Vector3.forward, out hit))
+        {
+            Debug.Log(hit.collider.name);
+            hit.collider.GetComponent<MouseDrag>().initialPos = hit.collider.transform.localPosition;
+            hit.collider.GetComponent<MouseDrag>().GenerateMove(newPos);
+        }
+        else
+        {
+            Debug.Log("Couldn't find chesspiece");
+        }
     }
 
     public void DetermineWinner()

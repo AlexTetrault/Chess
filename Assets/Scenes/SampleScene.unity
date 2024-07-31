@@ -957,8 +957,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63d6d871e24ad0944975b941a32f5ce8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  initialPos: {x: 0, y: 0}
   fenCalculator: {fileID: 751887649}
-  pieceBehaviour: {fileID: 751887651}
   gameManager: {fileID: 751887650}
   pawnPromotion: {fileID: 556250915}
   chessBoard: {fileID: 1399993258}
@@ -1983,8 +1983,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63d6d871e24ad0944975b941a32f5ce8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  initialPos: {x: 0, y: 0}
   fenCalculator: {fileID: 751887649}
-  pieceBehaviour: {fileID: 751887651}
   gameManager: {fileID: 751887650}
   pawnPromotion: {fileID: 556250915}
   chessBoard: {fileID: 1399993258}
@@ -2125,8 +2125,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63d6d871e24ad0944975b941a32f5ce8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  initialPos: {x: 0, y: 0}
   fenCalculator: {fileID: 751887649}
-  pieceBehaviour: {fileID: 751887651}
   gameManager: {fileID: 751887650}
   pawnPromotion: {fileID: 556250915}
   chessBoard: {fileID: 1399993258}
@@ -2461,8 +2461,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63d6d871e24ad0944975b941a32f5ce8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  initialPos: {x: 0, y: 0}
   fenCalculator: {fileID: 751887649}
-  pieceBehaviour: {fileID: 751887651}
   gameManager: {fileID: 751887650}
   pawnPromotion: {fileID: 556250915}
   chessBoard: {fileID: 1399993258}
@@ -2679,8 +2679,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63d6d871e24ad0944975b941a32f5ce8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  initialPos: {x: 0, y: 0}
   fenCalculator: {fileID: 751887649}
-  pieceBehaviour: {fileID: 751887651}
   gameManager: {fileID: 751887650}
   pawnPromotion: {fileID: 556250915}
   chessBoard: {fileID: 1399993258}
@@ -3364,8 +3364,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63d6d871e24ad0944975b941a32f5ce8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  initialPos: {x: 0, y: 0}
   fenCalculator: {fileID: 751887649}
-  pieceBehaviour: {fileID: 751887651}
   gameManager: {fileID: 751887650}
   pawnPromotion: {fileID: 556250915}
   chessBoard: {fileID: 1399993258}
@@ -4130,8 +4130,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63d6d871e24ad0944975b941a32f5ce8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  initialPos: {x: 0, y: 0}
   fenCalculator: {fileID: 751887649}
-  pieceBehaviour: {fileID: 751887651}
   gameManager: {fileID: 751887650}
   pawnPromotion: {fileID: 556250915}
   chessBoard: {fileID: 1399993258}
@@ -4391,8 +4391,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63d6d871e24ad0944975b941a32f5ce8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  initialPos: {x: 0, y: 0}
   fenCalculator: {fileID: 751887649}
-  pieceBehaviour: {fileID: 751887651}
   gameManager: {fileID: 751887650}
   pawnPromotion: {fileID: 556250915}
   chessBoard: {fileID: 1399993258}
@@ -6224,6 +6224,7 @@ MonoBehaviour:
   - {fileID: 296988195}
   moveCode: 
   isWhitesMove: 0
+  enPassantVictim: {fileID: 0}
   possibleMoves:
   - {x: 1, y: 2}
   - {x: -1, y: 2}
@@ -6231,11 +6232,12 @@ MonoBehaviour:
   blackKing: {fileID: 2052469159}
   whiteKing: {fileID: 296988195}
   chessBoard: {fileID: 1399993258}
-  pawnsAllowedToEnPassant: []
   legalMoves: []
   blackWins: {fileID: 617962413}
   whiteWins: {fileID: 2003046875}
   staleMate: {fileID: 1921026378}
+  movingSquare: {fileID: 0}
+  destinationSquare: {fileID: 0}
 --- !u!114 &751887651
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6497,8 +6499,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63d6d871e24ad0944975b941a32f5ce8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  initialPos: {x: 0, y: 0}
   fenCalculator: {fileID: 751887649}
-  pieceBehaviour: {fileID: 751887651}
   gameManager: {fileID: 751887650}
   pawnPromotion: {fileID: 556250915}
   chessBoard: {fileID: 1399993258}
@@ -7121,8 +7123,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63d6d871e24ad0944975b941a32f5ce8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  initialPos: {x: 0, y: 0}
   fenCalculator: {fileID: 751887649}
-  pieceBehaviour: {fileID: 751887651}
   gameManager: {fileID: 751887650}
   pawnPromotion: {fileID: 556250915}
   chessBoard: {fileID: 1399993258}
@@ -7263,8 +7265,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63d6d871e24ad0944975b941a32f5ce8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  initialPos: {x: 0, y: 0}
   fenCalculator: {fileID: 751887649}
-  pieceBehaviour: {fileID: 751887651}
   gameManager: {fileID: 751887650}
   pawnPromotion: {fileID: 556250915}
   chessBoard: {fileID: 1399993258}
@@ -7405,8 +7407,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63d6d871e24ad0944975b941a32f5ce8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  initialPos: {x: 0, y: 0}
   fenCalculator: {fileID: 751887649}
-  pieceBehaviour: {fileID: 751887651}
   gameManager: {fileID: 751887650}
   pawnPromotion: {fileID: 556250915}
   chessBoard: {fileID: 1399993258}
@@ -7547,8 +7549,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63d6d871e24ad0944975b941a32f5ce8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  initialPos: {x: 0, y: 0}
   fenCalculator: {fileID: 751887649}
-  pieceBehaviour: {fileID: 751887651}
   gameManager: {fileID: 751887650}
   pawnPromotion: {fileID: 556250915}
   chessBoard: {fileID: 1399993258}
@@ -7689,8 +7691,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63d6d871e24ad0944975b941a32f5ce8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  initialPos: {x: 0, y: 0}
   fenCalculator: {fileID: 751887649}
-  pieceBehaviour: {fileID: 751887651}
   gameManager: {fileID: 751887650}
   pawnPromotion: {fileID: 556250915}
   chessBoard: {fileID: 1399993258}
@@ -7831,8 +7833,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63d6d871e24ad0944975b941a32f5ce8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  initialPos: {x: 0, y: 0}
   fenCalculator: {fileID: 751887649}
-  pieceBehaviour: {fileID: 751887651}
   gameManager: {fileID: 751887650}
   pawnPromotion: {fileID: 556250915}
   chessBoard: {fileID: 1399993258}
@@ -8092,8 +8094,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63d6d871e24ad0944975b941a32f5ce8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  initialPos: {x: 0, y: 0}
   fenCalculator: {fileID: 751887649}
-  pieceBehaviour: {fileID: 751887651}
   gameManager: {fileID: 751887650}
   pawnPromotion: {fileID: 556250915}
   chessBoard: {fileID: 1399993258}
@@ -8654,8 +8656,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63d6d871e24ad0944975b941a32f5ce8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  initialPos: {x: 0, y: 0}
   fenCalculator: {fileID: 751887649}
-  pieceBehaviour: {fileID: 751887651}
   gameManager: {fileID: 751887650}
   pawnPromotion: {fileID: 556250915}
   chessBoard: {fileID: 1399993258}
@@ -9287,8 +9289,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63d6d871e24ad0944975b941a32f5ce8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  initialPos: {x: 0, y: 0}
   fenCalculator: {fileID: 751887649}
-  pieceBehaviour: {fileID: 751887651}
   gameManager: {fileID: 751887650}
   pawnPromotion: {fileID: 556250915}
   chessBoard: {fileID: 1399993258}
@@ -10500,8 +10502,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63d6d871e24ad0944975b941a32f5ce8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  initialPos: {x: 0, y: 0}
   fenCalculator: {fileID: 751887649}
-  pieceBehaviour: {fileID: 751887651}
   gameManager: {fileID: 751887650}
   pawnPromotion: {fileID: 556250915}
   chessBoard: {fileID: 1399993258}
@@ -10722,8 +10724,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63d6d871e24ad0944975b941a32f5ce8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  initialPos: {x: 0, y: 0}
   fenCalculator: {fileID: 751887649}
-  pieceBehaviour: {fileID: 751887651}
   gameManager: {fileID: 751887650}
   pawnPromotion: {fileID: 556250915}
   chessBoard: {fileID: 1399993258}
@@ -10864,8 +10866,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63d6d871e24ad0944975b941a32f5ce8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  initialPos: {x: 0, y: 0}
   fenCalculator: {fileID: 751887649}
-  pieceBehaviour: {fileID: 751887651}
   gameManager: {fileID: 751887650}
   pawnPromotion: {fileID: 556250915}
   chessBoard: {fileID: 1399993258}
@@ -11125,8 +11127,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63d6d871e24ad0944975b941a32f5ce8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  initialPos: {x: 0, y: 0}
   fenCalculator: {fileID: 751887649}
-  pieceBehaviour: {fileID: 751887651}
   gameManager: {fileID: 751887650}
   pawnPromotion: {fileID: 556250915}
   chessBoard: {fileID: 1399993258}
@@ -11386,8 +11388,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63d6d871e24ad0944975b941a32f5ce8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  initialPos: {x: 0, y: 0}
   fenCalculator: {fileID: 751887649}
-  pieceBehaviour: {fileID: 751887651}
   gameManager: {fileID: 751887650}
   pawnPromotion: {fileID: 556250915}
   chessBoard: {fileID: 1399993258}
@@ -12257,8 +12259,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63d6d871e24ad0944975b941a32f5ce8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  initialPos: {x: 0, y: 0}
   fenCalculator: {fileID: 751887649}
-  pieceBehaviour: {fileID: 751887651}
   gameManager: {fileID: 751887650}
   pawnPromotion: {fileID: 556250915}
   chessBoard: {fileID: 1399993258}
@@ -12518,8 +12520,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63d6d871e24ad0944975b941a32f5ce8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  initialPos: {x: 0, y: 0}
   fenCalculator: {fileID: 751887649}
-  pieceBehaviour: {fileID: 751887651}
   gameManager: {fileID: 751887650}
   pawnPromotion: {fileID: 556250915}
   chessBoard: {fileID: 1399993258}
@@ -12660,8 +12662,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63d6d871e24ad0944975b941a32f5ce8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  initialPos: {x: 0, y: 0}
   fenCalculator: {fileID: 751887649}
-  pieceBehaviour: {fileID: 751887651}
   gameManager: {fileID: 751887650}
   pawnPromotion: {fileID: 556250915}
   chessBoard: {fileID: 1399993258}
@@ -13159,8 +13161,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63d6d871e24ad0944975b941a32f5ce8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  initialPos: {x: 0, y: 0}
   fenCalculator: {fileID: 751887649}
-  pieceBehaviour: {fileID: 751887651}
   gameManager: {fileID: 751887650}
   pawnPromotion: {fileID: 556250915}
   chessBoard: {fileID: 1399993258}
@@ -13301,8 +13303,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63d6d871e24ad0944975b941a32f5ce8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  initialPos: {x: 0, y: 0}
   fenCalculator: {fileID: 751887649}
-  pieceBehaviour: {fileID: 751887651}
   gameManager: {fileID: 751887650}
   pawnPromotion: {fileID: 556250915}
   chessBoard: {fileID: 1399993258}
@@ -14037,8 +14039,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63d6d871e24ad0944975b941a32f5ce8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  initialPos: {x: 0, y: 0}
   fenCalculator: {fileID: 751887649}
-  pieceBehaviour: {fileID: 751887651}
   gameManager: {fileID: 751887650}
   pawnPromotion: {fileID: 556250915}
   chessBoard: {fileID: 1399993258}
@@ -14402,8 +14404,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63d6d871e24ad0944975b941a32f5ce8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  initialPos: {x: 0, y: 0}
   fenCalculator: {fileID: 751887649}
-  pieceBehaviour: {fileID: 751887651}
   gameManager: {fileID: 751887650}
   pawnPromotion: {fileID: 556250915}
   chessBoard: {fileID: 1399993258}
@@ -14558,8 +14560,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63d6d871e24ad0944975b941a32f5ce8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  initialPos: {x: 0, y: 0}
   fenCalculator: {fileID: 751887649}
-  pieceBehaviour: {fileID: 751887651}
   gameManager: {fileID: 751887650}
   pawnPromotion: {fileID: 556250915}
   chessBoard: {fileID: 1399993258}
@@ -14700,8 +14702,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63d6d871e24ad0944975b941a32f5ce8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  initialPos: {x: 0, y: 0}
   fenCalculator: {fileID: 751887649}
-  pieceBehaviour: {fileID: 751887651}
   gameManager: {fileID: 751887650}
   pawnPromotion: {fileID: 556250915}
   chessBoard: {fileID: 1399993258}

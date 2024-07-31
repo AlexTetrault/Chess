@@ -7,7 +7,7 @@ using UnityEngine;
 public class MouseDrag : MonoBehaviour
 {
     Vector2 difference;
-    Vector2 initialPos;
+    public Vector2 initialPos;
 
     SpriteRenderer spriteRenderer;
     ChessPiece chessPiece;
@@ -16,11 +16,8 @@ public class MouseDrag : MonoBehaviour
     Color translucent = new Color(1f, 1f, 1f, 0.75f);
 
     public FenCalculator fenCalculator;
-    public PieceBehaviour pieceBehaviour;
     public GameManager gameManager;
-
     public PawnPromotion pawnPromotion;
-
     public ChessBoard chessBoard;
 
 
@@ -58,9 +55,6 @@ public class MouseDrag : MonoBehaviour
         difference = (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition) - (Vector2)transform.position;
 
         spriteRenderer.color = translucent;
-        pieceBehaviour.activePiece = gameObject;
-        //pieceBehaviour.LineOfSight();
-        //gameManager.ShowAvailMoves(initialPos);
     }
 
     private void OnMouseDrag()
@@ -94,6 +88,7 @@ public class MouseDrag : MonoBehaviour
             }
         }
 
+        //check if the generated move is in the list of legal moves. If it isn't, do not complete the move.
         if (!gameManager.legalMoves.Contains(gameManager.moveCode))
         {
             transform.localPosition = initialPos;
@@ -101,47 +96,42 @@ public class MouseDrag : MonoBehaviour
             return;
         }
 
+        //The move is legal, carry out the move and check for special conditions (castling, en passant, attacking)
+
+
         Vector2 newPos = new Vector2(hit.transform.position.x, hit.transform.position.y);
         spriteRenderer.color = opaque;
-        SnapToSquare(newPos);
-        //gameManager.HideAvailMoves();
+        GenerateMove(newPos);
     }
 
-    public void AIMove(Vector3 newPos)
+    public void GenerateMove(Vector2 newPos)
     {
-
-    }
-
-    private void SnapToSquare(Vector2 newPos)
-    {
+        //snap the piece to the centre of the destination square
         transform.localPosition = newPos;
 
-        //refresh en passant info before calculating
-        if (gameManager.pawnsAllowedToEnPassant.Count > 0)
-        {
-            foreach (GameObject pawn in gameManager.pawnsAllowedToEnPassant)
-            {
-                pawn.GetComponent<ChessPiece>().canEnPassant = false;
-            }
-        }
-
-        gameManager.pawnsAllowedToEnPassant.Clear();
-
-        chessPiece.hasMoved = true;
+        //check if the piece is moving to a square occupied by a piece of the enemy color.
         gameManager.AttackEnemyPiece(gameObject);
 
+        //check for special conditions.
         CheckIfCastling(initialPos.x, newPos.x);
-        CheckIfDoingEnPassant(initialPos, newPos);
-        NotifyNeighborsOfEnPassant(initialPos.y, newPos.y);
-        CheckIPromotingPawn();
+        CheckIfEnPassanting(initialPos, newPos);
+        CheckIfPromotingPawn();
+
+        //this is for kings and rooks when calculating castle abilities.
+        chessPiece.hasMoved = true;
+
+        //move is finished. It is now the opponent's turn, notify if they have an opportunity to en passant.
         gameManager.ChangeTurn();
         fenCalculator.enPassantSquareCode = CalculateEnPassantCode(initialPos.y, newPos.y);
-        fenCalculator.UpdateFenCode();
 
+        //generate the new fen code so the opponent can perform their move. 
+        fenCalculator.UpdateFenCode();
     }
 
-    public void CheckIPromotingPawn()
+    private void CheckIfPromotingPawn()
     {
+        //for now, assume we will always turn our pawn into a queen.
+
         if (gameObject.tag != "Pawn")
         {
             return;
@@ -167,75 +157,17 @@ public class MouseDrag : MonoBehaviour
         }
     }
 
-    void NotifyNeighborsOfEnPassant(float initialPosY, float newPosY)
-    {
-        if (tag != "Pawn")
-        {
-            return;
-        }
-
-        if (Mathf.Round(Mathf.Abs(initialPosY - newPosY)) != 2)
-        {
-            return;
-        }
-
-        pieceBehaviour.enPassantVictim = gameObject;
-
-        RaycastHit leftHit;
-        RaycastHit rightHit;
-
-        gameObject.GetComponent<Collider>().enabled = false;
-
-        if (Physics.Raycast(transform.position, Vector3.left, out leftHit, 1.5f))
-        {
-            if (leftHit.collider.gameObject.tag != "Pawn")
-            {
-                gameObject.GetComponent<Collider>().enabled = true;
-                return;
-            }
-
-            if (leftHit.collider.GetComponent<ChessPiece>().isWhite == chessPiece.isWhite)
-            {
-                gameObject.GetComponent<Collider>().enabled = true;
-                return;
-            }
-
-            leftHit.collider.GetComponent<ChessPiece>().canEnPassant = true;
-            gameManager.pawnsAllowedToEnPassant.Add(leftHit.collider.gameObject);
-        }
-
-        if (Physics.Raycast(transform.position, Vector3.right, out rightHit, 1.5f))
-        {
-            if (rightHit.collider.gameObject.tag != "Pawn")
-            {
-                gameObject.GetComponent<Collider>().enabled = true;
-                return;
-            }
-
-            if (rightHit.collider.GetComponent<ChessPiece>().isWhite == chessPiece.isWhite)
-            {
-                gameObject.GetComponent<Collider>().enabled = true;
-                return;
-            }
-
-            rightHit.collider.GetComponent<ChessPiece>().canEnPassant = true;
-            gameManager.pawnsAllowedToEnPassant.Add(rightHit.collider.gameObject);
-        }
-
-        gameObject.GetComponent<Collider>().enabled = true;
-    }
-
-    void CheckIfDoingEnPassant(Vector2 initialPos, Vector2 newPos)
+    private void CheckIfEnPassanting(Vector2 initialPos, Vector2 newPos)
     {
         if (Mathf.Abs(initialPos.x - newPos.x) == 1 && Mathf.Abs(initialPos.y - newPos.y) == 1) 
         {
-            pieceBehaviour.enPassantVictim.GetComponent<SpriteRenderer>().enabled = false;
-            pieceBehaviour.enPassantVictim.GetComponent<Collider>().enabled = false;
-            chessBoard.chessPieces.Remove(pieceBehaviour.enPassantVictim);
+            gameManager.enPassantVictim.GetComponent<SpriteRenderer>().enabled = false;
+            gameManager.enPassantVictim.GetComponent<Collider>().enabled = false;
+            chessBoard.chessPieces.Remove(gameManager.enPassantVictim);
         }
     }
 
-    public string CalculateEnPassantCode(float initialYPos, float newYPos)
+    private string CalculateEnPassantCode(float initialYPos, float newYPos)
     {
         //pawn did not move this turn, therfore no en passant allowed.
         if (tag != "Pawn")
@@ -255,6 +187,7 @@ public class MouseDrag : MonoBehaviour
 
         if (Physics.Raycast(transform.position + behindPawn, Vector3.forward, out hit))
         {
+            gameManager.enPassantVictim = gameObject;
             return hit.collider.name;
         }
 
@@ -262,7 +195,7 @@ public class MouseDrag : MonoBehaviour
         return "-";
     }
 
-    void CheckIfCastling(float initialXPos, float newXPos)
+    private void CheckIfCastling(float initialXPos, float newXPos)
     {
         //if we are not moving a king, we are not castling.
         if (tag != "King")
