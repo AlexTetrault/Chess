@@ -159,6 +159,12 @@ public class MouseDrag : MonoBehaviour
 
     private void CheckIfEnPassanting(Vector2 initialPos, Vector2 newPos)
     {
+        //only pawns can en passant
+        if (tag != "Pawn")
+        {
+            return;
+        }
+
         if (Mathf.Abs(initialPos.x - newPos.x) == 1 && Mathf.Abs(initialPos.y - newPos.y) == 1) 
         {
             gameManager.enPassantVictim.GetComponent<SpriteRenderer>().enabled = false;

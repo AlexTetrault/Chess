@@ -22,12 +22,14 @@ public class FenCalculator : MonoBehaviour
     public GameObject squareToMoveTo;
     public GameObject squareMovingFrom;
     public GameObject movingPiece;
+    public GameOptions gameOptions;
     public string fenCode;
 
     private void Start()
     {
         //initialize the fenCode
         fenCode = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
+        enPassantSquareCode = "-";
     }
 
     public async void UpdateFenCode()
@@ -92,7 +94,7 @@ public class FenCalculator : MonoBehaviour
         string suggestedMove = await GetBestMove(newFenCode);
         Debug.Log(suggestedMove);
 
-        if (!gameManager.isWhitesMove)
+        if (gameManager.isWhitesMove != gameOptions.isPlayingWhite)
         {
             await Task.Delay(1000);
             gameManager.moveCode = suggestedMove;
@@ -128,7 +130,7 @@ public class FenCalculator : MonoBehaviour
 
     public async Task <string> GetBestMove(string fen)
     {
-        string bestMove = await stockFish.GetBestMove(fen, 5);
+        string bestMove = await stockFish.GetBestMove(fen, gameOptions.botDifficulty, gameOptions.botDepth);
 
         if (bestMove == "(none)")
         {

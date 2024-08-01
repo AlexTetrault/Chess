@@ -73,7 +73,7 @@ public class StockfishInterface : MonoBehaviour
     }
 
     //generate the best move;
-    public async Task<string> GetBestMove(string fen, int difficulty)
+    public async Task<string> GetBestMove(string fen, int difficulty, int depth)
     {
         if (!isRunning)
         {
@@ -86,7 +86,7 @@ public class StockfishInterface : MonoBehaviour
         int skillLevel = Mathf.Clamp(difficulty, 0, 20);
 
         await SendCommand($"setoption name Skill Level value {skillLevel}");
-        await SendCommand("go depth 3"); // Adjust depth as needed  
+        await SendCommand($"go depth {depth}");
 
         string bestMove = string.Empty;
 

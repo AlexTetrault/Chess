@@ -31,6 +31,8 @@ public class GameManager : MonoBehaviour
     public GameObject movingSquare;
     public GameObject destinationSquare;
 
+    public bool gameHasStarted;
+
     private void Start()
     {
         isWhitesMove = true;

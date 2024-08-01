@@ -9,13 +9,6 @@ public class ChessBoard : MonoBehaviour
     public GameObject[,] boardGrid = new GameObject[8, 8];
     public List<GameObject> chessPieces;
 
-    void Start()
-    {
-        //initialize fen code
-        fenCalculator.enPassantSquareCode = "-";
-        fenCalculator.UpdateFenCode();
-    }
-
     public void UpdateBoardGrid()
     {
         for (int x = 0; x < 8; x++)
