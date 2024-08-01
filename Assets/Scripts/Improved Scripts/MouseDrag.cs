@@ -20,6 +20,8 @@ public class MouseDrag : MonoBehaviour
     public PawnPromotion pawnPromotion;
     public ChessBoard chessBoard;
 
+    bool movingToEnPassantSquare = false;
+
 
     // Start is called before the first frame update
     void Start()
@@ -85,6 +87,15 @@ public class MouseDrag : MonoBehaviour
             if (hit.collider.tag == "Square")
             {
                 gameManager.moveCode += hit.collider.gameObject.name;
+
+                if (hit.collider.name == fenCalculator.enPassantSquareCode)
+                {
+                    movingToEnPassantSquare = true;
+                }
+                else
+                {
+                    movingToEnPassantSquare = false;
+                }
             }
         }
 
@@ -165,6 +176,18 @@ public class MouseDrag : MonoBehaviour
             return;
         }
 
+        //there is no en passant victim, therefore en passant is impossible.
+        if (gameManager.enPassantVictim == null)
+        {
+            return;
+        }
+
+        //make sure this diagonal pawn move is moving to the en passant sqaure, not just a regular attack.
+        if (movingToEnPassantSquare == false)
+        {
+            return;
+        }
+
         if (Mathf.Abs(initialPos.x - newPos.x) == 1 && Mathf.Abs(initialPos.y - newPos.y) == 1) 
         {
             gameManager.enPassantVictim.GetComponent<SpriteRenderer>().enabled = false;
@@ -178,12 +201,20 @@ public class MouseDrag : MonoBehaviour
         //pawn did not move this turn, therfore no en passant allowed.
         if (tag != "Pawn")
         {
+            if (gameManager.enPassantVictim != null)
+            {
+                gameManager.enPassantVictim = null;
+            }
             return "-";
         }
 
         //pawn did not move 2 spaces this turn, therefore no en passant allowed.
         if (Mathf.Round(Mathf.Abs(initialYPos - newYPos)) != 2)
         {
+            if (gameManager.enPassantVictim != null)
+            {
+                gameManager.enPassantVictim = null;
+            }
             return "-";
         }
 
@@ -198,6 +229,10 @@ public class MouseDrag : MonoBehaviour
         }
 
         //catch all, default is setting code to no en passant allowed. 
+        if (gameManager.enPassantVictim != null)
+        {
+            gameManager.enPassantVictim = null;
+        }
         return "-";
     }
 
