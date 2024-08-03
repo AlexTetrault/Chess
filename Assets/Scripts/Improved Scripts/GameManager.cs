@@ -33,10 +33,13 @@ public class GameManager : MonoBehaviour
 
     public bool gameHasStarted;
 
+    AudioManager audioManager;
+
     private void Start()
     {
         isWhitesMove = true;
         possibleMoves.Clear();
+        audioManager = GetComponent<AudioManager>();
     }
 
     public void ChangeTurn()
@@ -120,6 +123,11 @@ public class GameManager : MonoBehaviour
     public void StaleMate()
     {
         staleMate.enabled = true;
+    }
+
+    public void PlayRandomPieceMoveSound()
+    {
+        audioManager.PlayRandomSound();
     }
 }
 

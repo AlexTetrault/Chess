@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class GameOptions : MonoBehaviour
 {
@@ -34,31 +35,31 @@ public class GameOptions : MonoBehaviour
         if (difficulty == "N")
         {
             botDifficulty = 2;
-            botDepth = 3;
+            botDepth = 1;
         }
 
         if (difficulty == "I")
         {
             botDifficulty = 4;
-            botDepth = 6;
+            botDepth = 3;
         }
 
         if (difficulty == "A")
         {
             botDifficulty = 6;
-            botDepth = 10;
+            botDepth = 4;
         }
 
         if (difficulty == "P")
         {
             botDifficulty = 8;
-            botDepth = 14;
+            botDepth = 6;
         }
 
         if (difficulty == "G")
         {
             botDifficulty = 10;
-            botDepth = 20;
+            botDepth = 8;
         }
     }
 
@@ -122,5 +123,18 @@ public class GameOptions : MonoBehaviour
         {
             piece.transform.eulerAngles = rightSideUp;
         }
+    }
+
+    public void ReloadScene()
+    {
+        // Get the current active scene
+        Scene currentScene = SceneManager.GetActiveScene();
+        // Reload the current scene
+        SceneManager.LoadScene(currentScene.name);
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
     }
 }

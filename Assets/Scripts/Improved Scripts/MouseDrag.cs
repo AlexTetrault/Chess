@@ -19,6 +19,7 @@ public class MouseDrag : MonoBehaviour
     public GameManager gameManager;
     public PawnPromotion pawnPromotion;
     public ChessBoard chessBoard;
+    public GameOptions gameOptions;
 
     bool movingToEnPassantSquare = false;
 
@@ -32,8 +33,8 @@ public class MouseDrag : MonoBehaviour
 
     private void OnMouseDown()
     {
-        //acts to disable script function when it is not the player's turn. Disabling script does not stop OnMouse function. Annoying.
-        if (chessPiece.isWhite != gameManager.isWhitesMove)
+        //acts to disable script function when it is not the player's turn or the piece does not belong to the player. Disabling script does not stop OnMouse function. Annoying.
+        if (chessPiece.isWhite != gameManager.isWhitesMove || chessPiece.isWhite != gameOptions.isPlayingWhite)
         {
             return;
         }
@@ -61,8 +62,8 @@ public class MouseDrag : MonoBehaviour
 
     private void OnMouseDrag()
     {
-        //acts to disable script function when it is not the player's turn. Disabling script does not stop OnMouse function. Annoying.
-        if (chessPiece.isWhite != gameManager.isWhitesMove)
+        //acts to disable script function when it is not the player's turn or the piece does not belong to the player. Disabling script does not stop OnMouse function. Annoying.
+        if (chessPiece.isWhite != gameManager.isWhitesMove || chessPiece.isWhite != gameOptions.isPlayingWhite)
         {
             return;
         }
@@ -72,8 +73,8 @@ public class MouseDrag : MonoBehaviour
 
     private void OnMouseUp()
     {
-        //acts to disable script function when it is not the player's turn. Disabling script does not stop OnMouse function. Annoying.
-        if (chessPiece.isWhite != gameManager.isWhitesMove)
+        //acts to disable script function when it is not the player's turn or the piece does not belong to the player. Disabling script does not stop OnMouse function. Annoying.
+        if (chessPiece.isWhite != gameManager.isWhitesMove || chessPiece.isWhite != gameOptions.isPlayingWhite)
         {
             return;
         }
@@ -130,6 +131,8 @@ public class MouseDrag : MonoBehaviour
 
         //this is for kings and rooks when calculating castle abilities.
         chessPiece.hasMoved = true;
+
+        gameManager.PlayRandomPieceMoveSound();
 
         //move is finished. It is now the opponent's turn, notify if they have an opportunity to en passant.
         gameManager.ChangeTurn();
