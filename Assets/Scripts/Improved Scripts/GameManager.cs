@@ -91,7 +91,6 @@ public class GameManager : MonoBehaviour
 
     public void GenerateAIMove(string moveCode)
     {
-        Debug.Log("AI is going to move now");
         //find the sqaure the AI wants to move from and to.
         movingSquare = GameObject.Find(moveCode.Substring(0, 2));
         destinationSquare = GameObject.Find(moveCode.Substring(2, 2));
@@ -104,7 +103,6 @@ public class GameManager : MonoBehaviour
 
         if (Physics.Raycast(rayOrigin, Vector3.forward, out hit))
         {
-            Debug.Log(hit.collider.name);
             hit.collider.GetComponent<MouseDrag>().initialPos = hit.collider.transform.localPosition;
             hit.collider.GetComponent<MouseDrag>().GenerateMove(newPos);
         }

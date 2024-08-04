@@ -11,6 +11,7 @@ public class GameOptions : MonoBehaviour
 
     public int botDifficulty = 1;
     public int botDepth = 1;
+    public int moveTime = 100;
 
     public Camera mainCamera;
     public GameObject[] pieces;
@@ -28,38 +29,44 @@ public class GameOptions : MonoBehaviour
     {
         if (difficulty == "B")
         {
-            botDifficulty = 1;
+            botDifficulty = 0;
             botDepth = 1;
+            moveTime = 50;
         }
 
         if (difficulty == "N")
         {
-            botDifficulty = 2;
+            botDifficulty = 1;
             botDepth = 1;
+            moveTime = 75;
         }
 
         if (difficulty == "I")
         {
-            botDifficulty = 4;
-            botDepth = 3;
+            botDifficulty = 3;
+            botDepth = 2;
+            moveTime = 100;
         }
 
         if (difficulty == "A")
         {
-            botDifficulty = 6;
+            botDifficulty = 5;
             botDepth = 4;
+            moveTime = 250;
         }
 
         if (difficulty == "P")
         {
             botDifficulty = 8;
             botDepth = 6;
+            moveTime = 500;
         }
 
         if (difficulty == "G")
         {
             botDifficulty = 10;
             botDepth = 8;
+            moveTime = 1200;
         }
     }
 

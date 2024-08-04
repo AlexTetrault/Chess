@@ -88,11 +88,11 @@ public class FenCalculator : MonoBehaviour
 
         fenCode = newFenCode;
 
-        Debug.Log(newFenCode);
+        Debug.Log("Fen Code is: " + newFenCode);
 
         gameManager.legalMoves = await stockFish.CalculateLegalMoveList(newFenCode);
         string suggestedMove = await GetBestMove(newFenCode);
-        Debug.Log(suggestedMove);
+        Debug.Log("Stockfish suggests: " + suggestedMove);
 
         if (gameManager.isWhitesMove != gameOptions.isPlayingWhite)
         {
@@ -130,7 +130,7 @@ public class FenCalculator : MonoBehaviour
 
     public async Task <string> GetBestMove(string fen)
     {
-        string bestMove = await stockFish.GetBestMove(fen, gameOptions.botDifficulty, gameOptions.botDepth);
+        string bestMove = await stockFish.GetBestMove(fen, gameOptions.botDifficulty, gameOptions.botDepth, gameOptions.moveTime);
 
         if (bestMove == "(none)")
         {
