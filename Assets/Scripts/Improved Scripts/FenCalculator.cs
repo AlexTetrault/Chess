@@ -102,13 +102,16 @@ public class FenCalculator : MonoBehaviour
             //it is the bot's move, have the bot wait a second before making move. 
             await Task.Delay(1000);
 
-            //Have the bot make a random move sometimes (to make it perform worse) depending on difficulty setting.
-            int randomValue = UnityEngine.Random.Range(0, 11);
-            if (randomValue < gameOptions.randomMoveChance)
+            //Have the bot make a random move sometimes (to make it perform worse) depending on difficulty setting. Only if there are legal moves available.
+            if (gameManager.legalMoves.Count > 0)
             {
-                Debug.Log("Performing random move");
-                int randomMove = UnityEngine.Random.Range(0, gameManager.legalMoves.Count - 1);
-                suggestedMove = gameManager.legalMoves[randomMove];
+                int randomValue = UnityEngine.Random.Range(0, 11);
+                if (randomValue < gameOptions.randomMoveChance)
+                {
+                    Debug.Log("Performing random move");
+                    int randomMove = UnityEngine.Random.Range(0, gameManager.legalMoves.Count - 1);
+                    suggestedMove = gameManager.legalMoves[randomMove];
+                }
             }
 
             //carry out the move.
