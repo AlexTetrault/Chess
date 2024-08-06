@@ -110,7 +110,6 @@ public class MouseDrag : MonoBehaviour
 
         //The move is legal, carry out the move and check for special conditions (castling, en passant, attacking)
 
-
         Vector2 newPos = new Vector2(hit.transform.position.x, hit.transform.position.y);
         spriteRenderer.color = opaque;
         GenerateMove(newPos);
@@ -122,6 +121,15 @@ public class MouseDrag : MonoBehaviour
     {
         //snap the piece to the centre of the destination square
         transform.localPosition = newPos;
+
+        //every time a piece moves, this is considered a half turn (plie)
+        fenCalculator.halfMoveNumber++;
+
+        //whenever we move a pawn, the half number is reset to 0.
+        if (tag == "Pawn")
+        {
+            fenCalculator.halfMoveNumber = 0;
+        }
 
         //check if the piece is moving to a square occupied by a piece of the enemy color.
         gameManager.AttackEnemyPiece(gameObject);
@@ -135,6 +143,12 @@ public class MouseDrag : MonoBehaviour
         chessPiece.hasMoved = true;
 
         gameManager.PlayRandomPieceMoveSound();
+
+        //if black is playing their move, a full turn has occured.
+        if (!gameManager.isWhitesMove)
+        {
+            fenCalculator.fullMoveNumber++;
+        }
 
         //move is finished. It is now the opponent's turn, notify if they have an opportunity to en passant.
         gameManager.ChangeTurn();

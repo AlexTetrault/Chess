@@ -75,6 +75,10 @@ public class GameManager : MonoBehaviour
                     //moving to a black piece, take black piece off of the board. 
                     blackPiece.GetComponent<SpriteRenderer>().enabled = false;
                     blackPiece.GetComponent<Collider>().enabled = false;
+
+                    //attacking an opponents piece resets the half move counter to 0.
+                    fenCalculator.halfMoveNumber = 0;
+
                     blackPieces.Remove(blackPiece);
                     chessBoard.chessPieces.Remove(blackPiece);
                     break;
@@ -93,6 +97,10 @@ public class GameManager : MonoBehaviour
                     //moving to a white piece, take white piece off of the board. 
                     whitePiece.GetComponent<SpriteRenderer>().enabled = false;
                     whitePiece.GetComponent<Collider>().enabled = false;
+
+                    //attacking an opponents piece resets the half move counter to 0.
+                    fenCalculator.halfMoveNumber = 0;
+
                     whitePieces.Remove(whitePiece);
                     chessBoard.chessPieces.Remove(whitePiece);
                     break;

@@ -62,14 +62,21 @@ public class StockfishInterface : MonoBehaviour
     //create a send command function so we can tell stockfish to do things.
     public async Task SendCommand(string command)
     {
-        if (!isRunning)
+        try
         {
-            UnityEngine.Debug.LogError("Stockfish process is not running.");
-            return;
-        }
+            if (!isRunning)
+            {
+                UnityEngine.Debug.LogError("Stockfish process is not running.");
+                return;
+            }
 
-        await stockfishInput.WriteLineAsync(command);
-        await stockfishInput.FlushAsync();
+            await stockfishInput.WriteLineAsync(command);
+            await stockfishInput.FlushAsync();
+        }
+        catch (Exception ex)
+        {
+            UnityEngine.Debug.LogError($"IOException occurred: {ex.Message}");
+        }
     }
 
     //generate the best move;

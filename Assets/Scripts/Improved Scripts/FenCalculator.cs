@@ -30,6 +30,8 @@ public class FenCalculator : MonoBehaviour
         //initialize the fenCode
         fenCode = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
         enPassantSquareCode = "-";
+        halfMoveNumber = 0;
+        fullMoveNumber = 1;
     }
 
     public async void UpdateFenCode()
@@ -84,7 +86,7 @@ public class FenCalculator : MonoBehaviour
 
         newFenCode += enPassantSquareCode + " ";
 
-        newFenCode += "0 1"; // Simplified for illustration
+        newFenCode += $"{halfMoveNumber} {fullMoveNumber}";
 
         fenCode = newFenCode;
 
@@ -104,7 +106,7 @@ public class FenCalculator : MonoBehaviour
             int randomValue = UnityEngine.Random.Range(0, 11);
             if (randomValue < gameOptions.randomMoveChance)
             {
-                Debug.Log("Performing move instead.");
+                Debug.Log("Performing random move");
                 int randomMove = UnityEngine.Random.Range(0, gameManager.legalMoves.Count - 1);
                 suggestedMove = gameManager.legalMoves[randomMove];
             }
