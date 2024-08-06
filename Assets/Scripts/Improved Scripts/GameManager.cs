@@ -11,6 +11,8 @@ public class GameManager : MonoBehaviour
     public string moveCode;
     public bool isWhitesMove;
 
+    public bool isPlayersMove;
+
     public GameObject enPassantVictim;
 
     public List<Vector2> possibleMoves = new List<Vector2>();
@@ -19,6 +21,8 @@ public class GameManager : MonoBehaviour
 
     public GameObject blackKing;
     public GameObject whiteKing;
+
+    public int removeAttempts = 5;
 
     public ChessBoard chessBoard;
 
@@ -35,11 +39,19 @@ public class GameManager : MonoBehaviour
 
     AudioManager audioManager;
 
+    public GameOptions gameOptions;
+
+    public FenCalculator fenCalculator;
+
+    int layerMask = 1 << 7;
+
     private void Start()
     {
         isWhitesMove = true;
+        removeAttempts = 5;
         possibleMoves.Clear();
         audioManager = GetComponent<AudioManager>();
+        isPlayersMove = gameOptions.isPlayingWhite == isWhitesMove;
     }
 
     public void ChangeTurn()
@@ -101,14 +113,25 @@ public class GameManager : MonoBehaviour
 
         Vector2 newPos = new Vector2(destinationSquare.transform.localPosition.x, destinationSquare.transform.localPosition.y);
 
-        if (Physics.Raycast(rayOrigin, Vector3.forward, out hit))
+        if (Physics.Raycast(rayOrigin, Vector3.forward, out hit, Mathf.Infinity, layerMask))
         {
             hit.collider.GetComponent<MouseDrag>().initialPos = hit.collider.transform.localPosition;
             hit.collider.GetComponent<MouseDrag>().GenerateMove(newPos);
+            removeAttempts = 5;
+            isPlayersMove = true;
         }
+        //stockfish provided an illegal move, we will do a max of 5 attempts to retry and get a correct move. 
         else
         {
-            Debug.Log("Couldn't find chesspiece");
+            if (removeAttempts > 0)
+            {
+                fenCalculator.UpdateFenCode();
+                removeAttempts--;
+            }
+            else
+            {
+                Debug.Log("Could not get a move");
+            }
         }
     }
 

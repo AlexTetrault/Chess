@@ -91,12 +91,25 @@ public class FenCalculator : MonoBehaviour
         Debug.Log("Fen Code is: " + newFenCode);
 
         gameManager.legalMoves = await stockFish.CalculateLegalMoveList(newFenCode);
-        string suggestedMove = await GetBestMove(newFenCode);
-        Debug.Log("Stockfish suggests: " + suggestedMove);
 
         if (gameManager.isWhitesMove != gameOptions.isPlayingWhite)
         {
+            string suggestedMove = await GetBestMove(newFenCode);
+            Debug.Log("Stockfish suggests: " + suggestedMove);
+
+            //it is the bot's move, have the bot wait a second before making move. 
             await Task.Delay(1000);
+
+            //Have the bot make a random move sometimes (to make it perform worse) depending on difficulty setting.
+            int randomValue = UnityEngine.Random.Range(0, 11);
+            if (randomValue < gameOptions.randomMoveChance)
+            {
+                Debug.Log("Performing move instead.");
+                int randomMove = UnityEngine.Random.Range(0, gameManager.legalMoves.Count - 1);
+                suggestedMove = gameManager.legalMoves[randomMove];
+            }
+
+            //carry out the move.
             gameManager.moveCode = suggestedMove;
             gameManager.possibleMoves.Clear();
             gameManager.GenerateAIMove(suggestedMove);

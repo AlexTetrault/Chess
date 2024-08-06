@@ -34,7 +34,7 @@ public class MouseDrag : MonoBehaviour
     private void OnMouseDown()
     {
         //acts to disable script function when it is not the player's turn or the piece does not belong to the player. Disabling script does not stop OnMouse function. Annoying.
-        if (chessPiece.isWhite != gameManager.isWhitesMove || chessPiece.isWhite != gameOptions.isPlayingWhite)
+        if (!gameManager.isWhitesMove || chessPiece.isWhite != gameOptions.isPlayingWhite)
         {
             return;
         }
@@ -63,7 +63,7 @@ public class MouseDrag : MonoBehaviour
     private void OnMouseDrag()
     {
         //acts to disable script function when it is not the player's turn or the piece does not belong to the player. Disabling script does not stop OnMouse function. Annoying.
-        if (chessPiece.isWhite != gameManager.isWhitesMove || chessPiece.isWhite != gameOptions.isPlayingWhite)
+        if (!gameManager.isWhitesMove || chessPiece.isWhite != gameOptions.isPlayingWhite)
         {
             return;
         }
@@ -74,7 +74,7 @@ public class MouseDrag : MonoBehaviour
     private void OnMouseUp()
     {
         //acts to disable script function when it is not the player's turn or the piece does not belong to the player. Disabling script does not stop OnMouse function. Annoying.
-        if (chessPiece.isWhite != gameManager.isWhitesMove || chessPiece.isWhite != gameOptions.isPlayingWhite)
+        if (!gameManager.isWhitesMove || chessPiece.isWhite != gameOptions.isPlayingWhite)
         {
             return;
         }
@@ -114,6 +114,8 @@ public class MouseDrag : MonoBehaviour
         Vector2 newPos = new Vector2(hit.transform.position.x, hit.transform.position.y);
         spriteRenderer.color = opaque;
         GenerateMove(newPos);
+
+        gameManager.isPlayersMove = false;
     }
 
     public void GenerateMove(Vector2 newPos)
