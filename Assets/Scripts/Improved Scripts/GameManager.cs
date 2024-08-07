@@ -51,7 +51,7 @@ public class GameManager : MonoBehaviour
         removeAttempts = 5;
         possibleMoves.Clear();
         audioManager = GetComponent<AudioManager>();
-        isPlayersMove = gameOptions.isPlayingWhite == isWhitesMove;
+        isPlayersMove = true;
     }
 
     public void ChangeTurn()

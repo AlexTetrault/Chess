@@ -11,7 +11,6 @@ public class GameOptions : MonoBehaviour
 
     public int botDifficulty = 1;
     public int botDepth = 1;
-    public int moveTime = 100;
 
     public int randomMoveChance = 9;
 
@@ -23,6 +22,7 @@ public class GameOptions : MonoBehaviour
     public Canvas optionCanvas;
 
     public FenCalculator fenCalculator;
+    public GameManager gameManager;
 
     Vector3 upSideDown;
     Vector3 rightSideUp;
@@ -32,48 +32,42 @@ public class GameOptions : MonoBehaviour
         if (difficulty == "B")
         {
             botDifficulty = 0;
-            botDepth = 4;
-            moveTime = 100;
+            botDepth = 6;
             randomMoveChance = 8;
         }
 
         if (difficulty == "N")
         {
             botDifficulty = 1;
-            botDepth = 4;
-            moveTime = 100;
+            botDepth = 6;
             randomMoveChance = 7;
         }
 
         if (difficulty == "I")
         {
             botDifficulty = 3;
-            botDepth = 4;
-            moveTime = 100;
+            botDepth = 6;
             randomMoveChance = 5;
         }
 
         if (difficulty == "A")
         {
             botDifficulty = 5;
-            botDepth = 4;
-            moveTime = 200;
+            botDepth = 6;
             randomMoveChance = 3;
         }
 
         if (difficulty == "P")
         {
             botDifficulty = 8;
-            botDepth = 6;
-            moveTime = 500;
+            botDepth = 8;
             randomMoveChance = 1;
         }
 
         if (difficulty == "G")
         {
             botDifficulty = 10;
-            botDepth = 8;
-            moveTime = 1500;
+            botDepth = 10;
             randomMoveChance = 0;
         }
     }
@@ -109,8 +103,8 @@ public class GameOptions : MonoBehaviour
 
         switch (index)
         {
-            case 0: isPlayingWhite = true; RotateBoardToWhite(); break;
-            case 1: isPlayingWhite = false; RotateBoardToBlack(); break;
+            case 0: isPlayingWhite = true; RotateBoardToWhite(); gameManager.isPlayersMove = true; break;
+            case 1: isPlayingWhite = false; RotateBoardToBlack(); gameManager.isPlayersMove = false; break;
         }
     }
 

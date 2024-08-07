@@ -34,7 +34,7 @@ public class MouseDrag : MonoBehaviour
     private void OnMouseDown()
     {
         //acts to disable script function when it is not the player's turn or the piece does not belong to the player. Disabling script does not stop OnMouse function. Annoying.
-        if (!gameManager.isWhitesMove || chessPiece.isWhite != gameOptions.isPlayingWhite)
+        if (!gameManager.isPlayersMove || chessPiece.isWhite != gameOptions.isPlayingWhite)
         {
             return;
         }
@@ -63,7 +63,7 @@ public class MouseDrag : MonoBehaviour
     private void OnMouseDrag()
     {
         //acts to disable script function when it is not the player's turn or the piece does not belong to the player. Disabling script does not stop OnMouse function. Annoying.
-        if (!gameManager.isWhitesMove || chessPiece.isWhite != gameOptions.isPlayingWhite)
+        if (!gameManager.isPlayersMove || chessPiece.isWhite != gameOptions.isPlayingWhite)
         {
             return;
         }
@@ -74,7 +74,7 @@ public class MouseDrag : MonoBehaviour
     private void OnMouseUp()
     {
         //acts to disable script function when it is not the player's turn or the piece does not belong to the player. Disabling script does not stop OnMouse function. Annoying.
-        if (!gameManager.isWhitesMove || chessPiece.isWhite != gameOptions.isPlayingWhite)
+        if (!gameManager.isPlayersMove || chessPiece.isWhite != gameOptions.isPlayingWhite)
         {
             return;
         }

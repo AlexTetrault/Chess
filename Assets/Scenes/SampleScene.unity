@@ -7847,7 +7847,6 @@ MonoBehaviour:
   isPlayingWhite: 0
   botDifficulty: 0
   botDepth: 0
-  moveTime: 100
   randomMoveChance: 9
   mainCamera: {fileID: 519420031}
   pieces:
@@ -7887,6 +7886,7 @@ MonoBehaviour:
   colourDropDown: {fileID: 683184334}
   optionCanvas: {fileID: 1297960063}
   fenCalculator: {fileID: 751887649}
+  gameManager: {fileID: 751887650}
 --- !u!114 &751887653
 MonoBehaviour:
   m_ObjectHideFlags: 0

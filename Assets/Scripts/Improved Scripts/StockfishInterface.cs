@@ -80,7 +80,7 @@ public class StockfishInterface : MonoBehaviour
     }
 
     //generate the best move;
-    public async Task<string> GetBestMove(string fen, int difficulty, int depth, int movetime)
+    public async Task<string> GetBestMove(string fen, int difficulty, int depth)
     {
         if (!isRunning)
         {
@@ -93,7 +93,6 @@ public class StockfishInterface : MonoBehaviour
         await SendCommand($"go depth {depth}");
 
         await SendCommand("position fen " + fen);
-        await SendCommand($"go movetime {movetime}");
 
         string bestMove = string.Empty;
 

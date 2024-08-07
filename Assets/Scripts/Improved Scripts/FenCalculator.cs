@@ -119,6 +119,11 @@ public class FenCalculator : MonoBehaviour
             gameManager.possibleMoves.Clear();
             gameManager.GenerateAIMove(suggestedMove);
         }
+        else
+        {
+            //tell stockfish what the current fen code is to support sync.
+            await stockFish.SendCommand($"position fen {newFenCode}");
+        }
     }
 
     string CalculateCastles()
@@ -148,7 +153,7 @@ public class FenCalculator : MonoBehaviour
 
     public async Task <string> GetBestMove(string fen)
     {
-        string bestMove = await stockFish.GetBestMove(fen, gameOptions.botDifficulty, gameOptions.botDepth, gameOptions.moveTime);
+        string bestMove = await stockFish.GetBestMove(fen, gameOptions.botDifficulty, gameOptions.botDepth);
 
         if (bestMove == "(none)")
         {
