@@ -1,6 +1,5 @@
 using UnityEngine;
 using System.Threading.Tasks;
-using System;
 
 public class FenCalculator : MonoBehaviour
 {

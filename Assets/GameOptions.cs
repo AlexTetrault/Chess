@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
 
@@ -140,6 +137,16 @@ public class GameOptions : MonoBehaviour
         Scene currentScene = SceneManager.GetActiveScene();
         // Reload the current scene
         SceneManager.LoadScene(currentScene.name);
+    }
+
+    public void BackButton(Canvas canvas)
+    {
+        canvas.enabled = false;
+    }
+
+    public void SelectButton(Canvas canvas)
+    {
+        canvas.enabled = true;
     }
 
     public void QuitGame()
