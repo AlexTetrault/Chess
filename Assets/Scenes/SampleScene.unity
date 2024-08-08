@@ -2184,7 +2184,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -75}
+  m_AnchoredPosition: {x: 0, y: -44}
   m_SizeDelta: {x: 300, y: 70}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &182915902
@@ -4009,7 +4009,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 65.2}
+  m_AnchoredPosition: {x: 0, y: 96.19998}
   m_SizeDelta: {x: 770, y: 100.8}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &354295340
@@ -4032,7 +4032,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Developed & SFX by Alex Tetrault
+  m_text: Developed by Alex Tetrault
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -4211,7 +4211,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 12.2}
+  m_AnchoredPosition: {x: 0, y: 43}
   m_SizeDelta: {x: 770, y: 100.8}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &382440562
@@ -5300,7 +5300,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -183}
+  m_AnchoredPosition: {x: 0, y: -152.2}
   m_SizeDelta: {x: 770, y: 130.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &436723707
@@ -8861,10 +8861,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   soundEffects:
-  - {fileID: 8300000, guid: e863ef429f3168840abc49bb02550e90, type: 3}
-  - {fileID: 8300000, guid: 42d92973942ec974dabcbe1c22fe8297, type: 3}
-  - {fileID: 8300000, guid: f27ae8915bce299419935acb108bbd3d, type: 3}
-  - {fileID: 8300000, guid: 0b3faaab32fef5c4b9cf25e1796c7de6, type: 3}
+  - {fileID: 8300000, guid: 85f218f7a7306e84b8a2024b73daf2ab, type: 3}
+  - {fileID: 8300000, guid: 50f51788dad4c414d9b09a393885b9ea, type: 3}
+  - {fileID: 8300000, guid: e350665d5ff3ffc4f97c445e947a6ff7, type: 3}
+  - {fileID: 8300000, guid: 44e56ae7a70e53243b1d54f2770a8eb1, type: 3}
   pieceAudioSource: {fileID: 751887654}
   sfxSlider: {fileID: 1766928392}
   musicAudioSource: {fileID: 751887655}
@@ -20713,7 +20713,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -105.45}
+  m_AnchoredPosition: {x: 0, y: -74.649994}
   m_SizeDelta: {x: 770, y: 100.8}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1917094977
