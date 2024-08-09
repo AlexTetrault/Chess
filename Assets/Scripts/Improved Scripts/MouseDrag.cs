@@ -47,6 +47,21 @@ public class MouseDrag : MonoBehaviour
             if (hit.collider.tag == "Square")
             {
                 gameManager.moveCode += hit.collider.gameObject.name;
+
+                if (gameOptions.showingMoves)
+                {
+                    //find all legal destination squares and highlight them.
+                    foreach (string square in gameManager.legalMoves)
+                    {
+                        if (square.StartsWith(hit.collider.name))
+                        {
+                            string destinationSquare = square.Substring(2, 2);
+                            GameObject legalMoveSquare = GameObject.Find(destinationSquare);
+                            gameManager.destinationSquares.Add(legalMoveSquare);
+                            legalMoveSquare.GetComponent<BoardSquare>().LegalMoveColor();
+                        }
+                    }
+                }
             }
         }
 
@@ -73,6 +88,18 @@ public class MouseDrag : MonoBehaviour
         if (!gameManager.isPlayersMove || chessPiece.isWhite != gameOptions.isPlayingWhite)
         {
             return;
+        }
+
+        //revert all highlighted squares back to their original color.
+
+        if (gameOptions.showingMoves)
+        {
+            foreach (GameObject destinationSquare in gameManager.destinationSquares)
+            {
+                destinationSquare.GetComponent<BoardSquare>().ResetColor();
+            }
+
+            gameManager.destinationSquares.Clear();
         }
 
         //create a raycast behind the board and see what square the piece is moving to.

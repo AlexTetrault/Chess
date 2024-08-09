@@ -1,6 +1,7 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameOptions : MonoBehaviour
 {
@@ -20,6 +21,9 @@ public class GameOptions : MonoBehaviour
 
     public FenCalculator fenCalculator;
     public GameManager gameManager;
+
+    public Toggle showMovesToggle;
+    public bool showingMoves;
 
     Vector3 upSideDown;
     Vector3 rightSideUp;
@@ -73,6 +77,8 @@ public class GameOptions : MonoBehaviour
     {
         SetDifficulty("B");
         isPlayingWhite = true;
+
+        showingMoves = showMovesToggle.isOn;
 
         upSideDown = new Vector3(0, 0, 180);
         rightSideUp = new Vector3(0, 0, 0);
@@ -129,6 +135,11 @@ public class GameOptions : MonoBehaviour
         {
             piece.transform.eulerAngles = rightSideUp;
         }
+    }
+
+    public void ShowMovesToggle()
+    {
+        showingMoves = showMovesToggle.isOn ? true : false;
     }
 
     public void ReloadScene()

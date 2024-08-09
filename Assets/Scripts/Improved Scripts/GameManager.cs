@@ -26,6 +26,8 @@ public class GameManager : MonoBehaviour
 
     public List<string> legalMoves = new List<string>();
 
+    public List<GameObject> destinationSquares = new List<GameObject>();
+
     public Canvas blackWins;
     public Canvas whiteWins;
     public Canvas staleMate;
