@@ -8,6 +8,8 @@ public class MouseDrag : MonoBehaviour
     SpriteRenderer spriteRenderer;
     ChessPiece chessPiece;
 
+    bool isMovingPiece;
+
     Color opaque = new Color(1f, 1f, 1f, 1f);
     Color translucent = new Color(1f, 1f, 1f, 0.75f);
 
@@ -25,6 +27,7 @@ public class MouseDrag : MonoBehaviour
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         chessPiece = GetComponent<ChessPiece>();
+        isMovingPiece = false;
     }
 
     private void OnMouseDown()
@@ -34,6 +37,8 @@ public class MouseDrag : MonoBehaviour
         {
             return;
         }
+
+        isMovingPiece = true;
 
         gameManager.possibleMoves.Clear();
         gameManager.moveCode = string.Empty;
@@ -79,6 +84,12 @@ public class MouseDrag : MonoBehaviour
             return;
         }
 
+        //makes sure player is not holding down mouse button while turn is being switched over, as this causes bugs. 
+        if (isMovingPiece == false)
+        {
+            return;
+        }
+
         transform.position = (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition) - difference;
     }
 
@@ -89,6 +100,13 @@ public class MouseDrag : MonoBehaviour
         {
             return;
         }
+
+        if (isMovingPiece == false)
+        {
+            return;
+        }
+
+        isMovingPiece = false;
 
         //revert all highlighted squares back to their original color.
 
