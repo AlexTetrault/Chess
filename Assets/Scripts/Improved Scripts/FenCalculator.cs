@@ -80,7 +80,7 @@ public class FenCalculator : MonoBehaviour
 
         newFenCode += gameManager.isWhitesMove ? " w " : " b ";
 
-        newFenCode += CalculateCastles().Length == 0? CalculateCastles() : CalculateCastles() + " ";
+        newFenCode += CalculateCastles().Length == 0? "- " : CalculateCastles() + " ";
 
 
         newFenCode += enPassantSquareCode + " ";
