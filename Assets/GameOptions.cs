@@ -25,6 +25,8 @@ public class GameOptions : MonoBehaviour
     public Toggle showMovesToggle;
     public bool showingMoves;
 
+    public bool isPlayingInfectChess;
+
     Vector3 upSideDown;
     Vector3 rightSideUp;
 
@@ -77,6 +79,8 @@ public class GameOptions : MonoBehaviour
     {
         SetDifficulty("B");
         isPlayingWhite = true;
+
+        isPlayingInfectChess = true;
 
         showingMoves = showMovesToggle.isOn;
 
@@ -158,6 +162,18 @@ public class GameOptions : MonoBehaviour
     public void SelectButton(Canvas canvas)
     {
         canvas.enabled = true;
+    }
+
+    public void InfectChessOption(bool playingInfectChess)
+    {
+        if (playingInfectChess == false)
+        {
+            isPlayingInfectChess = false;
+        }
+        else
+        {
+            isPlayingInfectChess = true;
+        }
     }
 
     public void QuitGame()

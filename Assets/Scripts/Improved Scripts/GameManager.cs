@@ -43,6 +43,9 @@ public class GameManager : MonoBehaviour
 
     public FenCalculator fenCalculator;
 
+    public Sprite whitePawn, whiteRook, whiteKnight, whiteBishop, whiteQueen;
+    public Sprite blackPawn, blackRook, blackKnight, blackBishop, blackQueen;
+
     int layerMask = 1 << 7;
 
     private void Start()
@@ -81,6 +84,43 @@ public class GameManager : MonoBehaviour
 
                     blackPieces.Remove(blackPiece);
                     chessBoard.chessPieces.Remove(blackPiece);
+
+                    //game logic for infect-chess.
+                    if (!gameOptions.isPlayingInfectChess)
+                    {
+                        break;
+                    }
+
+                    //kings cannot be infected.
+                    if (activePiece.tag == "King")
+                    {
+                        break;
+                    }
+
+                    if (blackPiece.tag == "Pawn")
+                    {
+                        activePiece.GetComponent<SpriteRenderer>().sprite = whitePawn;
+                    }
+                    if (blackPiece.tag == "Rook")
+                    {
+                        activePiece.GetComponent<SpriteRenderer>().sprite = whiteRook;
+                    }
+                    if (blackPiece.tag == "Knight")
+                    {
+                        activePiece.GetComponent<SpriteRenderer>().sprite = whiteKnight;
+                    }
+                    if (blackPiece.tag == "Bishop")
+                    {
+                        activePiece.GetComponent<SpriteRenderer>().sprite = whiteBishop;
+                    }
+                    if (blackPiece.tag == "Queen")
+                    {
+                        activePiece.GetComponent<SpriteRenderer>().sprite = whiteQueen;
+                    }
+
+                    activePiece.tag = blackPiece.tag;
+                    activePiece.name = blackPiece.name.ToUpper();
+
                     break;
                 }
             }
@@ -103,6 +143,43 @@ public class GameManager : MonoBehaviour
 
                     whitePieces.Remove(whitePiece);
                     chessBoard.chessPieces.Remove(whitePiece);
+
+                    //game logic for infect-chess.
+                    if (!gameOptions.isPlayingInfectChess)
+                    {
+                        break;
+                    }
+
+                    //kings cannot be infected.
+                    if (activePiece.tag == "King")
+                    {
+                        break;
+                    }
+
+                    if (whitePiece.tag == "Pawn")
+                    {
+                        activePiece.GetComponent<SpriteRenderer>().sprite = blackPawn;
+                    }
+                    if (whitePiece.tag == "Rook")
+                    {
+                        activePiece.GetComponent<SpriteRenderer>().sprite = blackRook;
+                    }
+                    if (whitePiece.tag == "Knight")
+                    {
+                        activePiece.GetComponent<SpriteRenderer>().sprite = blackKnight;
+                    }
+                    if (whitePiece.tag == "Bishop")
+                    {
+                        activePiece.GetComponent<SpriteRenderer>().sprite = blackBishop;
+                    }
+                    if (whitePiece.tag == "Queen")
+                    {
+                        activePiece.GetComponent<SpriteRenderer>().sprite = blackQueen;
+                    }
+
+                    activePiece.tag = whitePiece.tag;
+                    activePiece.name = whitePiece.name.ToLower();
+
                     break;
                 }
             }
