@@ -11,6 +11,8 @@ public class AudioManager : MonoBehaviour
     public AudioSource musicAudioSource; // Reference to the AudioSource component
     public Slider musicSlider;
 
+    public AudioSource buttonSFXAudioSource;
+
     public AudioClip musicClip;
 
     private const string MusicVolumeKey = "MusicVolume";
@@ -42,6 +44,7 @@ public class AudioManager : MonoBehaviour
 
         musicSlider.value = PlayerPrefs.GetFloat(MusicVolumeKey, 0.5f);
         sfxSlider.value = PlayerPrefs.GetFloat(SFXVolumeKey, 1.0f);
+        
     }
 
     public void ChangeMusicVolume()
@@ -56,7 +59,8 @@ public class AudioManager : MonoBehaviour
 
     public void ChangeSFXVolume()
     {
-        pieceAudioSource.volume = 1 * sfxSlider.value;
+        pieceAudioSource.volume = sfxSlider.value;
+        buttonSFXAudioSource.volume = sfxSlider.value;
 
         if (pieceAudioSource.volume > 1)
         {
