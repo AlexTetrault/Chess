@@ -82,7 +82,6 @@ public class FenCalculator : MonoBehaviour
 
         newFenCode += CalculateCastles().Length == 0? "- " : CalculateCastles() + " ";
 
-
         newFenCode += enPassantSquareCode + " ";
 
         newFenCode += $"{halfMoveNumber} {fullMoveNumber}";
@@ -104,11 +103,10 @@ public class FenCalculator : MonoBehaviour
             //Have the bot make a random move sometimes (to make it perform worse) depending on difficulty setting. Only if there are legal moves available.
             if (gameManager.legalMoves.Count > 0)
             {
-                int randomValue = UnityEngine.Random.Range(0, 11);
+                int randomValue = Random.Range(0, 11);
                 if (randomValue < gameOptions.randomMoveChance)
                 {
-                    Debug.Log("Performing random move");
-                    int randomMove = UnityEngine.Random.Range(0, gameManager.legalMoves.Count - 1);
+                    int randomMove = Random.Range(0, gameManager.legalMoves.Count - 1);
                     suggestedMove = gameManager.legalMoves[randomMove];
                 }
             }
@@ -127,19 +125,24 @@ public class FenCalculator : MonoBehaviour
 
     string CalculateCastles()
     {
+        //initialize the castle code
         string castlesString = string.Empty;
+
+        //There are 4 possible castle options in the game. First 2 letters of the code are for white, last 2 are for black.
         for (int i = 0; i < 4; i++)
         {
             if (i <= 1)
             {
-                if (castles[i].GetComponent<ChessPiece>().hasMoved == false && whiteKing.GetComponent<ChessPiece>().hasMoved == false)
+                //to be a valid castle, the rook must be in play and has not moved. The King must not have ever moved aswell.
+                if (castles[i].GetComponent<ChessPiece>().hasMoved == false && whiteKing.GetComponent<ChessPiece>().hasMoved == false && castles[i].GetComponent<SpriteRenderer>().enabled == true)
                 {
                     castlesString += castleLetters[i];
                 }
             }
             else
             {
-                if (castles[i].GetComponent<ChessPiece>().hasMoved == false && blackKing.GetComponent<ChessPiece>().hasMoved == false)
+                //to be a valid castle, the rook must be in play and has not moved. The King must not have ever moved aswell.
+                if (castles[i].GetComponent<ChessPiece>().hasMoved == false && blackKing.GetComponent<ChessPiece>().hasMoved == false && castles[i].GetComponent<SpriteRenderer>().enabled == true)
                 {
                     castlesString += castleLetters[i];
                 }
