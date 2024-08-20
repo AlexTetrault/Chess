@@ -146,6 +146,11 @@ public class GameOptions : MonoBehaviour
         showingMoves = showMovesToggle.isOn ? true : false;
     }
 
+    public void StartMultiplayerConnection()
+    {
+        SceneManager.LoadScene("Loading");
+    }
+
     public void ReloadScene()
     {
         // Get the current active scene

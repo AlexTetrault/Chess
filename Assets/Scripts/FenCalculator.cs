@@ -10,19 +10,17 @@ public class FenCalculator : MonoBehaviour
     public GameObject blackKing, whiteKing;
     public Canvas whiteWinsCanvas;
     public Canvas blackWinsCanvas;
+    public GameOptions gameOptions;
 
     public string[] castleLetters;
 
     [HideInInspector] public int fullMoveNumber = 1;
     [HideInInspector] public int halfMoveNumber = 0;
-
     [HideInInspector] public string enPassantSquareCode;
-
-    public GameObject squareToMoveTo;
-    public GameObject squareMovingFrom;
-    public GameObject movingPiece;
-    public GameOptions gameOptions;
-    public string fenCode;
+    [HideInInspector] public GameObject squareToMoveTo;
+    [HideInInspector] public GameObject squareMovingFrom;
+    [HideInInspector] public GameObject movingPiece;
+    [HideInInspector] public string fenCode;
 
     private void Start()
     {
