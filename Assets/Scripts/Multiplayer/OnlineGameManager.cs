@@ -28,6 +28,8 @@ public class OnlineGameManager : MonoBehaviourPunCallbacks
     public GameObject masterWaitingScreen;
     public GameObject masterWaitingBanner;
 
+    public GameObject infectIndicator;
+
     [HideInInspector] public GameObject movingSquare;
     [HideInInspector] public GameObject destinationSquare;
     [HideInInspector] public List<GameObject> destinationSquares = new List<GameObject>();
@@ -41,6 +43,7 @@ public class OnlineGameManager : MonoBehaviourPunCallbacks
 
     public OnlineFenCalculator fenCalculator;
     public OnlineChessBoard chessBoard;
+    public OnlineGameOptions gameOptions;
 
     int layerMask = 1 << 7;
 
@@ -92,6 +95,42 @@ public class OnlineGameManager : MonoBehaviourPunCallbacks
                     blackPieces.Remove(blackPiece);
                     chessBoard.chessPieces.Remove(blackPiece);
 
+                    //game logic for infect-chess.
+                    if (!gameOptions.isInfect)
+                    {
+                        break;
+                    }
+
+                    //kings cannot be infected.
+                    if (activePiece.tag == "King")
+                    {
+                        break;
+                    }
+
+                    if (blackPiece.tag == "Pawn")
+                    {
+                        activePiece.GetComponent<SpriteRenderer>().sprite = gameOptions.whitePawn;
+                    }
+                    if (blackPiece.tag == "Rook")
+                    {
+                        activePiece.GetComponent<SpriteRenderer>().sprite = gameOptions.whiteRook;
+                    }
+                    if (blackPiece.tag == "Knight")
+                    {
+                        activePiece.GetComponent<SpriteRenderer>().sprite = gameOptions.whiteKnight;
+                    }
+                    if (blackPiece.tag == "Bishop")
+                    {
+                        activePiece.GetComponent<SpriteRenderer>().sprite = gameOptions.whiteBishop;
+                    }
+                    if (blackPiece.tag == "Queen")
+                    {
+                        activePiece.GetComponent<SpriteRenderer>().sprite = gameOptions.whiteQueen;
+                    }
+
+                    activePiece.tag = blackPiece.tag;
+                    activePiece.name = blackPiece.name.ToUpper();
+
                     break;
                 }
             }
@@ -114,6 +153,42 @@ public class OnlineGameManager : MonoBehaviourPunCallbacks
 
                     whitePieces.Remove(whitePiece);
                     chessBoard.chessPieces.Remove(whitePiece);
+
+                    //game logic for infect-chess.
+                    if (!gameOptions.isInfect)
+                    {
+                        break;
+                    }
+
+                    //kings cannot be infected.
+                    if (activePiece.tag == "King")
+                    {
+                        break;
+                    }
+
+                    if (whitePiece.tag == "Pawn")
+                    {
+                        activePiece.GetComponent<SpriteRenderer>().sprite = gameOptions.blackPawn;
+                    }
+                    if (whitePiece.tag == "Rook")
+                    {
+                        activePiece.GetComponent<SpriteRenderer>().sprite = gameOptions.blackRook;
+                    }
+                    if (whitePiece.tag == "Knight")
+                    {
+                        activePiece.GetComponent<SpriteRenderer>().sprite = gameOptions.blackKnight;
+                    }
+                    if (whitePiece.tag == "Bishop")
+                    {
+                        activePiece.GetComponent<SpriteRenderer>().sprite = gameOptions.blackBishop;
+                    }
+                    if (whitePiece.tag == "Queen")
+                    {
+                        activePiece.GetComponent<SpriteRenderer>().sprite = gameOptions.blackQueen;
+                    }
+
+                    activePiece.tag = whitePiece.tag;
+                    activePiece.name = whitePiece.name.ToLower();
 
                     break;
                 }
@@ -161,6 +236,13 @@ public class OnlineGameManager : MonoBehaviourPunCallbacks
     public void CloseClientWaitingScreen()
     {
         clientWaitingScreen.SetActive(false);
+    }
+
+    [PunRPC]
+    public void SetGameToInfect()
+    {
+        gameOptions.isInfect = true;
+        infectIndicator.SetActive(true);
     }
 
     public override void OnPlayerLeftRoom(Player otherPlayer)

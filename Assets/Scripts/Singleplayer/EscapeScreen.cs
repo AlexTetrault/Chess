@@ -8,6 +8,7 @@ using Photon.Realtime;
 public class EscapeScreen : MonoBehaviourPunCallbacks
 {
     Canvas canvas;
+    public Canvas settingsCanvas;
 
     // Start is called before the first frame update
     void Start()
@@ -53,5 +54,10 @@ public class EscapeScreen : MonoBehaviourPunCallbacks
     public void CloseWindow()
     {
         canvas.enabled = false;
+    }
+
+    public void OpenSettings()
+    {
+        settingsCanvas.enabled = true;
     }
 }

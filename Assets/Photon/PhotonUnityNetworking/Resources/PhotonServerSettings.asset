@@ -43,6 +43,7 @@ MonoBehaviour:
   - TakeEnPassantVictim
   - CloseWaitingScreen
   - CloseClientWaitingScreen
+  - SetGameToInfect
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

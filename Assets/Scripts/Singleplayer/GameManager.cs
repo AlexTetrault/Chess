@@ -37,7 +37,7 @@ public class GameManager : MonoBehaviour
 
     public bool gameHasStarted;
 
-    AudioManager audioManager;
+    public AudioManager audioManager;
 
     public GameOptions gameOptions;
 
@@ -53,7 +53,6 @@ public class GameManager : MonoBehaviour
         isWhitesMove = true;
         removeAttempts = 5;
         possibleMoves.Clear();
-        audioManager = GetComponent<AudioManager>();
         isPlayersMove = true;
     }
 
